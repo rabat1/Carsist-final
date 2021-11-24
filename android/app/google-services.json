@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1072465010589",
+    "project_id": "carsist-68ff0",
+    "storage_bucket": "carsist-68ff0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1072465010589:android:a88219d0c6e992381fd974",
+        "android_client_info": {
+          "package_name": "com.carsist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1072465010589-l7k9ltf2e3q80sdcjbvf3okvplsuckid.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjn2riskQCAl-gZ5r7F6Ss_QGmgzP9Pbk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1072465010589-l7k9ltf2e3q80sdcjbvf3okvplsuckid.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
