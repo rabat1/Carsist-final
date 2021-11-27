@@ -38,7 +38,8 @@ export default function Login({ navigation })
         if(user.emailVerified === true)
         { 
           const data = await getUser(user.uid);
-          console.log(data);
+        //is se check karo data main id wohi hai jo furebase par hai to means reducer se expense list mn user lo wahan se id lo or listget mn send
+          console.log(data.id);
           dispatch(updateUser(data));
            
         }

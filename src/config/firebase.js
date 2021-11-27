@@ -55,9 +55,21 @@ async function loginUser(email,password)
 async function getUser(uid)
 {
   const {_data} = await firestore().collection('users').doc(uid).get();
+  console.log('getuserdata',_data);
+  console.log('getuserdata',_data.email);
   _data.id=uid;
+  
   return _data;
 }
+//expense list by rabat
+async function userExpenseList(uid)
+{
+  const {_data} = await firestore().collection('users').doc(uid).get();
+  _data.id=uid;
+  expenses= _data.expenses;
+  return expenses;
+}
+
 
 async function updateStatus(uid)
 {
