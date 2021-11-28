@@ -28,7 +28,7 @@ const Input = ({label,onChangeText,error,icon,iconPosition, style, value, ...pro
     return (
         <View style={styles.inputContainer}>
 
-            {label&&<Text style={{color:'black'}}>{label}</Text>}
+            {label&&<Text style={{color:Colors.primaryDark}}>{label}</Text>}
 
          <View style={[styles.wrapper,{alignItems:icon?'center':'baseline'},
          {borderColor:getBorderColor(),
@@ -40,6 +40,7 @@ const Input = ({label,onChangeText,error,icon,iconPosition, style, value, ...pro
                     style={[styles.textInput,style]}
                     onFocus={()=>setFocus(true)}
                     onBlur={()=>setFocus(false)}
+                    
                     {...props}
                     />
                 </View>

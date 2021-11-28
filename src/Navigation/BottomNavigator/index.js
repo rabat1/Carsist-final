@@ -29,7 +29,7 @@ export default function HomeTabs() {
               borderBottomWidth: 2,
             },
         tabBarStyle: {
-            height:50,
+            height:60,
             backgroundColor:'white',
             paddingVertical:5,
             borderTopLeftRadius:20,

@@ -3,7 +3,8 @@ import Colors from '../../Utils/Colors';
 
 export default StyleSheet.create({
     inputContainer:{
-        paddingVertical:8,
+        paddingVertical:10,
+      
     },
     textInput:{
     flex:1,
@@ -17,7 +18,8 @@ wrapper:{
     borderRadius:10,
     flexDirection:'row',
     paddingHorizontal:5,
-    alignContent:'center'
+    alignContent:'center',
+  //  width:'60%',
 },
 error:{
     color:Colors.danger,
