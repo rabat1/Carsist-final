@@ -1,12 +1,12 @@
 import React from 'react';
 import {useState} from 'react';
 import {Center,NativeBaseProvider, 
-  Box,Heading,VStack,FormControl,Input,Button,Radio,Spinner,ScrollView} from "native-base";
+  Box,Heading,VStack,FormControl,Input,Button,Spinner,ScrollView} from "native-base";
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { registerUser } from '../../../config/firebase';
+import { registerUser} from '../../../config/firebase';
 
 
-export default function SignUp({ navigation })
+export default function SignUp({navigation})
 {
    const [name,setName] = useState('');
    const [email,setEmail] = useState('');
@@ -14,17 +14,18 @@ export default function SignUp({ navigation })
    const [password,setPassword] = useState('');
    const [hidePass, setHidePass] = useState(true);
    const [loading,setLoading] = useState(false);
-   const [option, setOption] = useState("user");
+  //  const [option, setOption] = useState("user");
   
 
-   const signup =  async ({navigation}) =>{
+   const signup = async () =>{
   
        setLoading(true);
-       let mechanic;
-       if (option === "user") {
+       
+      
         try{
       
           await registerUser({name,email,contact,password});
+          navigation.goBack();
           // console.log(user);
           // dispatch(updateUser(user));
          
@@ -45,11 +46,43 @@ export default function SignUp({ navigation })
            }
             console.log(e)
         }
-       }
-       else mechanic = false;
-
+        
       setLoading(false);
-      // navigation.goBack(null);
+      
+       
+      //  else 
+      //  {
+      //   try{
+      
+      //     const id = await registerMechanic({name,email,contact,password});
+      //     navigation.navigate("MechanicRegistration",id);
+      //     // console.log(user);
+      //     // dispatch(updateUser(user));
+         
+          
+      //    //  console.log(user.uid);
+      //    //  console.log(email,password);
+      //    //  console.log('User account created & signed in!');
+      //    //  const temp =auth().currentUser;
+      //    //  console.log(temp);
+      //   }
+      //   catch(e)
+      //  {  if (e.code === 'auth/email-already-in-use') {
+      //        alert('That email address is already in use!');
+      //      }
+       
+      //      else if (e.code === 'auth/invalid-email') {
+      //        alert('That email address is invalid!');
+      //      }
+      //       console.log(e)
+      //   }
+
+         
+     
+      //  setLoading(false);
+      //  return;
+      // }
+
      
 
     }
@@ -115,24 +148,7 @@ export default function SignUp({ navigation })
           />
           } isRequired={true}/>
       </FormControl>
-      <FormControl>
-        <FormControl.Label>Are you?</FormControl.Label>
-        <Radio.Group
-        name="myRadioGroup"
-        accessibilityLabel="choose option"
-        value={option}
-        onChange={(nextValue) => {
-          setOption(nextValue)
-        }}
-      >
-        <Radio value="user" my={1}>
-          User
-        </Radio>
-        <Radio value="mechanic" my={1}>
-          Mechanic
-        </Radio>
-      </Radio.Group>
-      </FormControl>
+      
      {loading? <Spinner color="emerald.500" size="lg"/>: 
       <Button mt="2" colorScheme="primary" onPress={signup}>
      Sign up

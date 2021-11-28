@@ -10,7 +10,9 @@ import {
     Button,
     HStack,
     Spinner,
-    AlertDialog
+    AlertDialog,
+    Modal,
+    Radio
   } from "native-base";
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {Center,NativeBaseProvider} from "native-base";
@@ -26,6 +28,8 @@ export default function Login({ navigation })
   const [hidePass, setHidePass] = useState(true);
   const [loading,setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const [option, setOption] = useState("user")
 
   const onClose = () => setIsOpen(false)
   const dispatch = useDispatch();
@@ -87,7 +91,7 @@ export default function Login({ navigation })
         <Input type={hidePass ? 'password' : 'text'} value={password} onChangeText={(text) => setPassword(text)}  InputRightElement={
             <Icon
             name={hidePass ? 'eye-slash' : 'eye'}
-            size={25}
+            size={20}
             color="black"
             onPress={() => setHidePass(!hidePass)}
           />
@@ -117,10 +121,46 @@ export default function Login({ navigation })
                   fontSize: "sm",
                 }}
                 href="#"
-                onPress={() => navigation.navigate('SignUp')}
+                onPress={() => setShowModal(true)}
               >
                 Sign Up
               </Link>
+              <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+              <Modal.Content maxWidth="400px">
+                <Modal.CloseButton />
+                <Modal.Header>Sign Up</Modal.Header>
+                <Modal.Body>
+                <FormControl>
+                <FormControl.Label>Are you?</FormControl.Label>
+                <Radio.Group
+                name="myRadioGroup"
+                accessibilityLabel="choose option"
+                value={option}
+                onChange={(nextValue) => {
+                  setOption(nextValue)
+                }}
+              >
+                <Radio value="user" my={1}>
+                  User
+                </Radio>
+                <Radio value="mechanic" my={1}>
+                  Mechanic
+                </Radio>
+              </Radio.Group>
+              </FormControl>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button
+                      onPress={() => {
+                        setShowModal(false);
+                        option === "user"? navigation.navigate('SignUp') : navigation.navigate('MechanicRegistration');
+                      }}
+                    >
+                      continue
+                    </Button>
+                </Modal.Footer>
+              </Modal.Content>
+            </Modal>
             
             </HStack>
           </VStack>

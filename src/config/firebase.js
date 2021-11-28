@@ -1,5 +1,6 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 
 async function registerUser(authparams)
 {  
@@ -69,7 +70,56 @@ await firestore()
   })
 }
 
+async function uploadImage(folder,response)
+{
+  const reference = storage().ref(folder + response['fileName']);
+  await reference.putFile(response["uri"]);
+  const url = await storage().ref(folder+ response['fileName']).getDownloadURL();
+  return url;
+}
+
+//'shop images/'
+async function registerMechanic(params)
+{
+  const {name,email,contact,password,shopName,address,services,cnic,slipImage,shopImage} = params;
+  const {user} = await auth().createUserWithEmailAndPassword(email,password);
+
+  user.sendEmailVerification();
+  const shopUrl = await uploadImage('shop images/',shopImage);
+  const slipUrl = await uploadImage('registration-slip/',slipImage);
+  
+  let uid=user.uid.toString();
+    
+    await firestore().collection('mechanic').doc(uid).set({
+        name,email,contact,status:'pending',shopName,address,services,cnic,shopUrl,slipUrl
+    });
+    return uid;
+}
+
+
+
+// async function uploadMechanicInfo(params)
+// {
+//   // const {id,shopName,address,services,cnic,slipImage,shopImage} = params;
+//   // console.log(params,id);
+
+//   const shopUrl = await uploadImage('shop images/',shopImage);
+//   const slipUrl = await uploadImage('registration-slip/',slipImage);
+
+//   await firestore()
+//   .collection('mechanic')
+//   .doc(id)
+//   .update({
+//     shopName,address,services,cnic,shopUrl,slipUrl
+//   });
+// return;
+//   // return(shopName,address,services,cnic,shopUrl,slipUrl);
+
+
+  
+// }
+
 
 export{
-    registerUser,loginUser,getUser,updateStatus
+    registerUser,loginUser,getUser,updateStatus,registerMechanic
 }
