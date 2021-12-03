@@ -74,7 +74,7 @@ return()=>{}
         <View style={{marginTop:10, backgroundColor:Colors.white}}>
             
             <FlatList
-            keyExtractor={(item)=>String(item.cost)} 
+            keyExtractor={(item)=>String(item.mechanic_name)} 
             data={data} 
             renderItem={renderItem}
             ItemSeparatorComponent={()=>

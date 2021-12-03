@@ -1,68 +1,47 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { View, Text } from 'react-native'
 import FuelTracking from '../../../../Components/FuelTracking'
+import { userFuelList } from '../../../../config/firebase';
 import { CustomHeader } from '../../../../Navigation/CustomHeader';
-const index = () => {
+import { connect } from 'react-redux';
 
-    const fuelTrackingData = [
-        {
-            month:'Jan',
-            date:'22/10.20121',
-            mileage: "Beachside Bar",
-            cost: 260,
-            amount: "$$",
-            type_fuel:'petrol',
-        },
-        {
-            month:'Jan',
-            date:'22/10.20121',
-            mileage: "Beachside Bar",
-            cost: 250,
-            amount: "$$",
-            type_fuel:'petrol',
-        },
-        {
-            month:'Jan',
-            date:'22/10.20121',
-            mileage: "Beachside Bar",
-            cost: 240,
-            amount: "$$",
-            type_fuel:'petrol',
-        },
-        {
-            month:'Jan',
-            date:'22/10.20121',
-            mileage: "Beachside Bar",
-            cost: 230,
-            amount: "$$",
-            type_fuel:'petrol', 
-          },
-          {
-            month:'Jan',
-            date:'22/10.20121',
-            mileage: "Beachside Bar",
-            cost: 220,
-            amount: "$$",
-            type_fuel:'petrol', 
-          },
-          {
-            month:'Jan',
-            date:'22/10.20121',
-            mileage: "Beachside Bar",
-            cost: 200,
-            amount: "$$",
-            type_fuel:'petrol',
-          },
-           
-      ];
+const index = (props) => {
+
+      const [fuelList, setFuelList]= useState();
+      
+      const getFuelData=async ()=>{
+        
+      const data= await userFuelList(props.userData.userReducer.user.id);
+      console.log('data',data);
+      setFuelList(data);
+    }
+    
+    
+    React.useEffect(()=>{
+      console.log('calledd')
+        getFuelData();
+       
+     },[]);
+    
+     React.useEffect(()=>{
+    },[fuelList]);
+    
     
 
     return (
         <View>    
             <CustomHeader isHome={true} title='Fuel Tracker' />
-            <FuelTracking data={fuelTrackingData} />
+            <FuelTracking data={fuelList} />
         </View>        
     )
 }
-
-export default index
+function mapStateToProps(user) {
+    return {
+      userData:user
+      
+    }
+  }
+  
+  
+  export default connect(mapStateToProps)(index);
+  

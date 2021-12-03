@@ -5,20 +5,26 @@ import FuelTrackEdit from '../../../../Components/FuelTrackEdit'
 import { ScrollView } from 'react-native-gesture-handler'
 import Colors from '../../../../Utils/Colors'
 import Icon from '../../../../Utils/Icon'
-const index = () => {
+import { connect } from 'react-redux';
+import { addRecFuelTracking } from '../../../../config/firebase'
+
+const index = (props) => {
     const [form,setForm] = useState({});
     const [loading,setLoading]= useState(false);
+  
     const onChangeText=({name,value})=>{
         setForm({...form,[name]: value});
       };
-  const onSubmit=()=>{
-//setLoading(true);
+
+const onSubmit=async ()=>{
+console.log('props count',props.userData.userReducer.user.id);
 console.log(form);
 if(form.date==''|| form.cost==''|| form.amount==''){
-  console.log('arayyy')
-  //setLoading(false);
   Alert.alert('Please Fill all the details');
   
+}
+else{
+  const anything= await addRecFuelTracking(form,props.userData.userReducer.user.id);
 }
   }    
     return (
@@ -40,5 +46,11 @@ if(form.date==''|| form.cost==''|| form.amount==''){
         </>
     )
 }
+function mapStateToProps(user) {
+  return {
+    userData:user
+    
+  }
+}
 
-export default index
+export default connect(mapStateToProps)(index);

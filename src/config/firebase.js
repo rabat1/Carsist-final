@@ -1,6 +1,6 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-
+import firebase from 'firebase/app'
 async function registerUser(authparams)
 {  
     const {name,email,contact,password} = authparams;
@@ -27,6 +27,36 @@ async function registerUser(authparams)
     
   
 }
+
+async function addRecFuelTracking(form,uid)
+{  
+  console.log('firebase',form);
+  console.log('firebase',uid);
+  const {date,cost,amount,type_fuel,mileage} = form;
+  firestore().collection('users').doc(uid).update({
+    fuelList: firestore.FieldValue.arrayUnion(form)
+});
+}
+
+async function userFuelList(uid)
+{
+  const {_data} = await firestore().collection('users').doc(uid).get();
+  let fuelList;
+  fuelList=_data.fuelList;
+  console.log(fuelList)
+  return fuelList;
+}
+async function userExpenseList(uid)
+{
+  const {_data} = await firestore().collection('users').doc(uid).get();
+  let expenseList;
+  expenseList=_data.expenses;
+  return expenseList;
+}
+
+
+
+
 
 async function loginUser(email,password)
 {
@@ -61,15 +91,8 @@ async function getUser(uid)
   
   return _data;
 }
-//expense list by rabat
-async function userExpenseList(uid)
-{
-  const {_data} = await firestore().collection('users').doc(uid).get();
-  _data.id=uid;
-  expenses= _data.expenses;
-  return expenses;
-}
 
+//expense list by rabat
 
 async function updateStatus(uid)
 {
@@ -83,5 +106,5 @@ await firestore()
 
 
 export{
-    registerUser,loginUser,getUser,updateStatus
+    registerUser,loginUser,getUser,updateStatus, userExpenseList,addRecFuelTracking,userFuelList,
 }

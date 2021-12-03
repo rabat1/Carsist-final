@@ -44,13 +44,13 @@ const index = ({data}) => {
                 style={{backgroundColor:Colors.white}}
         >
 
-        {data.map((item)=>(
+        {data?data.map((item)=>(
             
          <>
             <List.Accordion
                 theme={{ colors: { primary: Colors.white } }}
                 style={{ backgroundColor: Colors.primary,paddingVertical:0, marginTop:8 }}
-                    title={item.month+'  '+item.date}
+                    title={item.date}
                     left={props => <List.Icon {...props} icon="fuel" />}
                     titleStyle={{color:Colors.white}}
             >
@@ -62,7 +62,7 @@ const index = ({data}) => {
             </List.Accordion>
              </> 
             )
-            )}
+            ):<Text>No data</Text>}
 
         </List.Section>
       
