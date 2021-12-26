@@ -26,6 +26,8 @@ const CustomButton = ({
         }
         }
     return (
+        <>
+        {loading?<ActivityIndicator style={{marginTop:'10%'}}  />:
         <TouchableOpacity onPress={onPress}
          style={[styles.wrapper,{backgroundColor:getBgColor()},style]}>
                 <View style={[styles.loadingSection]}>
@@ -36,6 +38,8 @@ const CustomButton = ({
           
         
         </TouchableOpacity>
+}
+        </>
     )
 }
 
