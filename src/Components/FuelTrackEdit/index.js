@@ -17,8 +17,7 @@ const index = ({ onChangeText, onSubmit, form, loading }) => {
 
   return (
     <KeyboardAvoidingView>
-
-      <Input style={{ color: 'black' }} placeholder='Select Date' editable={false} label='Date' value={form.date || ''} iconPosition='left'
+      <Input style={{ color: 'black' }} placeholder='Select Date' editable={false} label='Date*' value={form.date || ''} iconPosition='left'
         icon={
           <TouchableOpacity onPress={showDatepicker}><Text><Icon color={Colors.primaryDark} type='materialCommunity' name='calendar-clock' size={26} /></Text></TouchableOpacity>
         } />
@@ -37,14 +36,7 @@ const index = ({ onChangeText, onSubmit, form, loading }) => {
         />
       )}
 
-      <Input
-        onChangeText={(value) => {
-          onChangeText({ name: 'mileage', value: value })
-        }}
-        keyboardType='numeric'
-        value={form.mileage || ""}
-        label='Mileage' placeholder="Enter Mileage" />
-
+     
       <Input
         onChangeText={(value) => {
           onChangeText({ name: 'cost', value: value })
@@ -60,6 +52,13 @@ const index = ({ onChangeText, onSubmit, form, loading }) => {
         keyboardType='numeric'
         value={form.amount || ""}
         label='Amount/Quantity*' placeholder="Enter Amount" />
+   <Input
+        onChangeText={(value) => {
+          onChangeText({ name: 'mileage', value: value })
+        }}
+        keyboardType='numeric'
+        value={form.mileage || ""}
+        label='Mileage' placeholder="Enter Mileage" />
 
       <Input
         onChangeText={(value) => {

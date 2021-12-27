@@ -8,7 +8,7 @@ import Reminders from '../../Screens/App/User/Remiders';
 import FuelTracker from '../../Screens/App/User/FuelTracker';
 import Icon from '../../Utils/Icon';
 import Colors from '../../Utils/Colors';
-import { ExpenseStack, FuelTrackStack } from '../StackNavigation';
+import { ExpenseStack, FuelTrackStack, HomeStack } from '../StackNavigation';
 
 const Tab = createBottomTabNavigator();
 
@@ -65,7 +65,7 @@ export default function HomeTabs() {
     })}
   >
 
-    <Tab.Screen name="Home" component={Home}
+    <Tab.Screen name="Home" component={HomeStack}
         options={{
         //  headerShown:false,
         //   tabBarIcon: ({Color}) => (

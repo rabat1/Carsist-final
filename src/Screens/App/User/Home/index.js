@@ -9,10 +9,10 @@ import { CustomHeader } from '../../../../Navigation/CustomHeader'
 
 const index = () => {
     const [shop, setShop] = useState("San Francisco");
-    //const {setOptions, toggleDrawer, navigate} = useNavigation();
+    const {navigate} = useNavigation();
     
     const onPress = () => {
-        //navigate from here
+        navigate('issue');
     }
 
     // React.useEffect(()=>{

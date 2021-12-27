@@ -44,8 +44,11 @@ const index = (props) => {
     }
     
     else {
-      if (form.date == '' || form.cost == '' || form.amount == '') {
-        Alert.alert('Please Fill all the details');
+      if (form.date == undefined || form.cost == undefined || form.amount == undefined ||
+        form.date.length==0||form.cost.length==0 || form.amount.length==0
+        
+        ) {
+        Alert.alert('Please Fill All the Compulsory Fields');
 
       }
       else {
