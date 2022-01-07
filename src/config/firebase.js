@@ -1,6 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/core';
+import messaging from '@react-native-firebase/messaging';
 
 async function registerUser(authparams) {
   const { name, email, contact, password } = authparams;
@@ -99,10 +100,36 @@ async function userExpenseList(uid) {
   return expenseList;
 }
 
+async function saveTokenToDatabase(token) {
+  // Assume user is already signed in
+  const userId = auth().currentUser.uid;
+  // Get the device token
+         
+  // Add the token to the users datastore
+
+  // await firestore().collection('users').doc(uid).update({
+  //   fuelList: firestore.FieldValue.arrayUnion(updatedData)
+  // });
+  await firestore().collection('users').doc(userId).set({
+    token: token
+  }, { merge: true })
+
+
+}
+
+
 async function loginUser(email, password) {
 
   const { user } = await auth().signInWithEmailAndPassword(email, password);
-  console.log(user);
+  messaging()
+  .getToken()
+  .then(token => {
+    //console.log(token)
+    saveTokenToDatabase(token);
+  });
+
+  
+
   //  let  uid =user.uid;
   ////user = userCredential.user.uid.toString();
 

@@ -20,7 +20,6 @@ import { useDispatch} from 'react-redux';
 import {loginUser,getUser,updateStatus} from '../../../config/firebase';
 import { updateUser } from '../../../store/actions/userAction';
 
-
 export default function Login({ navigation })
 {
   const [email,setEmail] = useState('');
@@ -44,6 +43,9 @@ export default function Login({ navigation })
           const data = await getUser(user.uid);
         //is se check karo data main id wohi hai jo furebase par hai to means reducer se expense list mn user lo wahan se id lo or listget mn send
           console.log(data.id);
+
+          
+            
           dispatch(updateUser(data));
            
         }
