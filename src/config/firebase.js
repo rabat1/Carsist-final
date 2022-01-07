@@ -51,20 +51,20 @@ async function addRecFuelTracking(form, uid) {
   return latestdata;
 }
 
-async function editRecFuelTracking(updatedData,uid){
+async function editRecFuelTracking(updatedData, uid) {
 
   const { _data } = await firestore().collection('users').doc(uid).get();
   let fuelList;
   fuelList = _data.fuelList;
   const items = fuelList.filter(item => item.id !== updatedData.id);
-  const temp= await firestore().collection('users').doc(uid).set({
+  const temp = await firestore().collection('users').doc(uid).set({
     fuelList: items
   }, { merge: true })
-  
+
   await firestore().collection('users').doc(uid).update({
     fuelList: firestore.FieldValue.arrayUnion(updatedData)
   });
-  
+
   const latestdata = await userFuelList(uid);
   return latestdata;
 
@@ -86,7 +86,7 @@ async function delRecFuelTracking(id, uid) {
 
 async function userFuelList(uid) {
   console.log('callll')
-  
+
   const { _data } = await firestore().collection('users').doc(uid).get();
   let fuelList;
   fuelList = _data.fuelList;
@@ -101,15 +101,10 @@ async function userExpenseList(uid) {
 }
 
 async function saveTokenToDatabase(token) {
-  // Assume user is already signed in
-  const userId = auth().currentUser.uid;
-  // Get the device token
-         
-  // Add the token to the users datastore
 
-  // await firestore().collection('users').doc(uid).update({
-  //   fuelList: firestore.FieldValue.arrayUnion(updatedData)
-  // });
+  const userId = auth().currentUser.uid;
+
+  // Add the token to the users datastore
   await firestore().collection('users').doc(userId).set({
     token: token
   }, { merge: true })
@@ -121,14 +116,15 @@ async function saveTokenToDatabase(token) {
 async function loginUser(email, password) {
 
   const { user } = await auth().signInWithEmailAndPassword(email, password);
+  // Get the device token
   messaging()
-  .getToken()
-  .then(token => {
-    //console.log(token)
-    saveTokenToDatabase(token);
-  });
+    .getToken()
+    .then(token => {
+      //console.log(token)
+      saveTokenToDatabase(token);
+    });
 
-  
+
 
   //  let  uid =user.uid;
   ////user = userCredential.user.uid.toString();
@@ -219,6 +215,6 @@ async function registerMechanic(params) {
 
 export {
   registerUser, registerMechanic, delRecFuelTracking, loginUser, getUser, updateStatus,
-   userExpenseList, addRecFuelTracking, userFuelList, editRecFuelTracking
+  userExpenseList, addRecFuelTracking, userFuelList, editRecFuelTracking
 
 }
