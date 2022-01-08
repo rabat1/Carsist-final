@@ -1,7 +1,6 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
-import { useNavigation } from '@react-navigation/core';
 import messaging from '@react-native-firebase/messaging';
 
 async function registerUser(authparams)
@@ -32,29 +31,47 @@ async function registerUser(authparams)
   
 }
 
-async function loginUser(email,password)
-{
+async function saveTokenToDatabase(token) {
 
-  const {user} = await auth().signInWithEmailAndPassword(email,password);
-  console.log(user);
+  const userId = auth().currentUser.uid;
+
+  // Add the token to the users datastore
+  await firestore().collection('users').doc(userId).set({
+    token: token
+  }, { merge: true })
+
+}
+
+async function loginUser(email, password) {
+
+  const { user } = await auth().signInWithEmailAndPassword(email, password);
+  // Get the device token
+  messaging()
+    .getToken()
+    .then(token => {
+      //console.log(token)
+      saveTokenToDatabase(token);
+    });
+
+
   //  let  uid =user.uid;
   ////user = userCredential.user.uid.toString();
 
-  
-    
 
-    // if (docSnap.exists()) {
-    //   console.log("Document data:", docSnap.data());
-    // } else {
-    //   // doc.data() will be undefined in this case
-    //   console.log("No such document!");
-    // }
+
+  // if (docSnap.exists()) {
+  //   console.log("Document data:", docSnap.data());
+  // } else {
+  //   // doc.data() will be undefined in this case
+  //   console.log("No such document!");
+  // }
 
   return user;
-  
+
   // user = userCredential.user.uid.toString();
 
 }
+
 
 async function getUser(uid)
 {
@@ -154,17 +171,6 @@ async function userFuelList(uid) {
 }
 
 
-async function saveTokenToDatabase(token) {
-
-  const userId = auth().currentUser.uid;
-
-  // Add the token to the users datastore
-  await firestore().collection('users').doc(userId).set({
-    token: token
-  }, { merge: true })
-
-
-}
 
 
 
