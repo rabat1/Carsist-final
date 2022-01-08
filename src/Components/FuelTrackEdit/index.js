@@ -4,7 +4,7 @@ import Input from '../Input';
 import CustomButton from '../CustomButton'
 import Colors from '../../Utils/Colors';
 
-const index = ({onChangeText,onSubmit,form,loading}) => {
+const FuelTrackEdit = ({onChangeText,onSubmit,form,loading}) => {
     
     return (
         <KeyboardAvoidingView>
@@ -60,4 +60,4 @@ const index = ({onChangeText,onSubmit,form,loading}) => {
     )
 }
 
-export default index
+export default FuelTrackEdit

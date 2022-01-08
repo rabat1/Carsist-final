@@ -10,9 +10,10 @@ async function registerUser(authparams)
       user.sendEmailVerification();
       
       let uid=user.uid.toString();
+      let mechanic = false;
       
       await firestore().collection('users').doc(uid).set({
-          name,email,contact
+          name,email,contact,mechanic
       });
       // const {_data} = await firestore().collection('users').doc(uid).get();
       // _data.id=uid;
@@ -62,6 +63,17 @@ async function getUser(uid)
   
   return _data;
 }
+
+async function getMechanic(uid)
+{
+  const {_data} = await firestore().collection('mechanic').doc(uid).get();
+  // console.log('getuserdata',_data);
+  // console.log('getuserdata',_data.email);
+  _data.id=uid;
+  
+  return _data;
+}
+
 //expense list by rabat
 async function userExpenseList(uid)
 {
@@ -101,9 +113,10 @@ async function registerMechanic(params)
   const slipUrl = await uploadImage('registration-slip/',slipImage);
   
   let uid=user.uid.toString();
+  let mechanic = true;
     
     await firestore().collection('mechanic').doc(uid).set({
-        name,email,contact,status:'pending',shopName,address,services,cnic,shopUrl,slipUrl
+        name,email,contact,status:'pending',shopName,address,services,cnic,shopUrl,slipUrl,mechanic
     });
     return uid;
 }
@@ -133,5 +146,5 @@ async function registerMechanic(params)
 
 
 export{
-    registerUser,loginUser,getUser,updateStatus,registerMechanic
+    registerUser,loginUser,getUser,updateStatus,registerMechanic,getMechanic
 }

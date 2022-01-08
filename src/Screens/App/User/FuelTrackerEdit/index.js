@@ -22,7 +22,7 @@ if(form.date==''|| form.cost==''|| form.amount==''){
 }
   }    
     return (
-        < >
+        <View>
             <CustomHeader title='Add Record' />
             <View style={{backgroundColor:Colors.primary, height:80, justifyContent:'center',alignItems:'center'}}>
               <Text style={{color:Colors.white,fontSize:16,fontWeight:'700'}}>Add Your Car's Fuel Tracking Record</Text>
@@ -37,7 +37,7 @@ if(form.date==''|| form.cost==''|| form.amount==''){
             loading={loading}
             />
             </ScrollView>
-        </>
+        </View>
     )
 }
 

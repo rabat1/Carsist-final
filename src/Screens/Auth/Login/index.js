@@ -17,7 +17,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {Center,NativeBaseProvider} from "native-base";
 import { useDispatch} from 'react-redux';
-import {loginUser,getUser,updateStatus} from '../../../config/firebase';
+import {loginUser,getUser,updateStatus,getMechanic} from '../../../config/firebase';
 import { updateUser } from '../../../store/actions/userAction';
 
 
@@ -38,20 +38,77 @@ export default function Login({ navigation })
   const login = async () =>{
       setLoading(true);
       try{
-        const user = await loginUser(email,password);
+        // start
+        var user = await loginUser(email,password);
         if(user.emailVerified === true)
         { 
           const data = await getUser(user.uid);
-        //is se check karo data main id wohi hai jo furebase par hai to means reducer se expense list mn user lo wahan se id lo or listget mn send
-          console.log(data.id);
-          dispatch(updateUser(data));
+         
+             //is se check karo data main id wohi hai jo furebase par hai to means reducer se expense list mn user lo wahan se id lo or listget mn send
+            console.log(data);
+            if(data !== undefined)
+            {
+              dispatch(updateUser(data));
+            }
            
+            
+          
         }
         else setIsOpen(true);
       }
       catch(e)
       {
-        alert(e.message);
+        // start of catch
+      
+        
+        if(e.message=="undefined is not an object (evaluating '_data.email')")
+        {
+          // try{
+          //   var user2 = await loginUser(email,password);
+          //   if(user2.emailVerified === true)
+          //   {
+          //     const data = await getMechanic(user2.uid);
+          //     if(data.status === "pending")
+          //     {
+          //       alert("your status is still pending");
+          //     }
+          //     else dispatch(updateUser(data));
+          //   }
+          //   else alert("you have not verified your email");
+           
+          // }
+          // catch(e)
+          // {
+          //   alert(e.message);
+          // }
+          
+            var user2 = await loginUser(email,password);
+            if(user2.emailVerified === true)
+            {
+              const data = await getMechanic(user2.uid);
+              if(data.status == "pending")
+              {
+                alert("your status is still pending");
+              }
+              else if (data.status=="rejected")
+              {
+                alert("sorry, you can't use app, please check your email. ");
+              }
+              else dispatch(updateUser(data));
+            }
+            else setIsOpen(true);
+           
+          
+         
+        }
+        else 
+        {
+          if(e.message =="The password is invalid or the user does not have a password") alert("password is wrong");
+           
+          console.log(e.message);
+        }
+       
+        
       }
       setLoading(false);
   }
