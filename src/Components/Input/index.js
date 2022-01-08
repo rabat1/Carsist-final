@@ -3,7 +3,7 @@ import { View, Text, TextInput } from 'react-native'
 import Colors from '../../Utils/Colors';
 import styles from './styles';
 
-const Input = ({label,onChangeText,error,icon,iconPosition, style, value, ...props}) => {
+const Input = ({label,multiline,onChangeText,error,icon,iconPosition, style, value, ...props}) => {
    const [focus, setFocus] = useState(false)
    
    const getFlexDirection=()=>{
@@ -30,7 +30,7 @@ const Input = ({label,onChangeText,error,icon,iconPosition, style, value, ...pro
 
             {label&&<Text style={{color:Colors.primaryDark}}>{label}</Text>}
 
-         <View style={[styles.wrapper,{alignItems:icon?'center':'baseline'},
+         <View style={[styles.wrapper,{alignItems:icon?'center':'baseline',height:multiline?100:45},
          {borderColor:getBorderColor(),
                 flexDirection: getFlexDirection()}]}>
                  <View >{icon&&icon}</View>

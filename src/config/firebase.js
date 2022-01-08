@@ -1,6 +1,8 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
+import { useNavigation } from '@react-navigation/core';
+import messaging from '@react-native-firebase/messaging';
 
 async function registerUser(authparams)
 {  
@@ -10,7 +12,7 @@ async function registerUser(authparams)
       user.sendEmailVerification();
       
       let uid=user.uid.toString();
-      let mechanic = false;
+      let mechanic=false;
       
       await firestore().collection('users').doc(uid).set({
           name,email,contact,mechanic
@@ -82,6 +84,88 @@ async function userExpenseList(uid)
   expenses= _data.expenses;
   return expenses;
 }
+async function addRecFuelTracking(form, uid) {
+
+  const { _data } = await firestore().collection('users').doc(uid).get();
+  var tempArray = [];
+  for (var i = 0; i < _data.fuelList.length; i++) {
+    tempArray.push(_data.fuelList[i].id);
+  }
+  RandomIdGenerator();
+
+  function RandomIdGenerator() {
+    let makeId = Math.floor((Math.random() * 634));
+
+    if (!tempArray.includes(makeId)) {
+      form.id = makeId;
+      firestore().collection('users').doc(uid).update({
+        fuelList: firestore.FieldValue.arrayUnion(form)
+      });
+    }
+    else if (tempArray.includes(makeId)) {
+      RandomIdGenerator();
+    }
+  }
+  const latestdata = await userFuelList(uid);
+  return latestdata;
+}
+
+async function editRecFuelTracking(updatedData, uid) {
+
+  const { _data } = await firestore().collection('users').doc(uid).get();
+  let fuelList;
+  fuelList = _data.fuelList;
+  const items = fuelList.filter(item => item.id !== updatedData.id);
+  const temp = await firestore().collection('users').doc(uid).set({
+    fuelList: items
+  }, { merge: true })
+
+  await firestore().collection('users').doc(uid).update({
+    fuelList: firestore.FieldValue.arrayUnion(updatedData)
+  });
+
+  const latestdata = await userFuelList(uid);
+  return latestdata;
+
+}
+
+async function delRecFuelTracking(id, uid) {
+  const { _data } = await firestore().collection('users').doc(uid).get();
+  let fuelList;
+  fuelList = _data.fuelList;
+  const items = fuelList.filter(item => item.id !== id);
+  await firestore().collection('users').doc(uid).set({
+    fuelList: items
+  }, { merge: true })
+  return items;
+
+
+
+}
+
+async function userFuelList(uid) {
+  console.log('callll')
+
+  const { _data } = await firestore().collection('users').doc(uid).get();
+  let fuelList;
+  fuelList = _data.fuelList;
+  console.log('callll')
+  return fuelList;
+}
+
+
+async function saveTokenToDatabase(token) {
+
+  const userId = auth().currentUser.uid;
+
+  // Add the token to the users datastore
+  await firestore().collection('users').doc(userId).set({
+    token: token
+  }, { merge: true })
+
+
+}
+
 
 
 async function updateStatus(uid)
@@ -113,10 +197,9 @@ async function registerMechanic(params)
   const slipUrl = await uploadImage('registration-slip/',slipImage);
   
   let uid=user.uid.toString();
-  let mechanic = true;
     
     await firestore().collection('mechanic').doc(uid).set({
-        name,email,contact,status:'pending',shopName,address,services,cnic,shopUrl,slipUrl,mechanic
+        name,email,contact,status:'pending',shopName,address,services,cnic,shopUrl,slipUrl
     });
     return uid;
 }
@@ -146,5 +229,8 @@ async function registerMechanic(params)
 
 
 export{
-    registerUser,loginUser,getUser,updateStatus,registerMechanic,getMechanic
+    registerUser,loginUser,getUser,updateStatus,registerMechanic,getMechanic,delRecFuelTracking,userExpenseList, addRecFuelTracking, userFuelList, editRecFuelTracking
+    
 }
+
+

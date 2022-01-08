@@ -20,7 +20,6 @@ import { useDispatch} from 'react-redux';
 import {loginUser,getUser,updateStatus,getMechanic} from '../../../config/firebase';
 import { updateUser } from '../../../store/actions/userAction';
 
-
 export default function Login({ navigation })
 {
   const [email,setEmail] = useState('');

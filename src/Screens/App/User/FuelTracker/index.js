@@ -1,68 +1,53 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text } from 'react-native'
 import FuelTracking from '../../../../Components/FuelTracking'
+import { delRecFuelTracking, userFuelList } from '../../../../config/firebase';
 import { CustomHeader } from '../../../../Navigation/CustomHeader';
-const index = () => {
+import { connect } from 'react-redux';
+import { useNavigation, useRoute } from '@react-navigation/core';
 
-    const fuelTrackingData = [
-        {
-            month:'Jan',
-            date:'22/10.20121',
-            mileage: "Beachside Bar",
-            cost: 260,
-            amount: "$$",
-            type_fuel:'petrol',
-        },
-        {
-            month:'Jan',
-            date:'22/10.20121',
-            mileage: "Beachside Bar",
-            cost: 250,
-            amount: "$$",
-            type_fuel:'petrol',
-        },
-        {
-            month:'Jan',
-            date:'22/10.20121',
-            mileage: "Beachside Bar",
-            cost: 240,
-            amount: "$$",
-            type_fuel:'petrol',
-        },
-        {
-            month:'Jan',
-            date:'22/10.20121',
-            mileage: "Beachside Bar",
-            cost: 230,
-            amount: "$$",
-            type_fuel:'petrol', 
-          },
-          {
-            month:'Jan',
-            date:'22/10.20121',
-            mileage: "Beachside Bar",
-            cost: 220,
-            amount: "$$",
-            type_fuel:'petrol', 
-          },
-          {
-            month:'Jan',
-            date:'22/10.20121',
-            mileage: "Beachside Bar",
-            cost: 200,
-            amount: "$$",
-            type_fuel:'petrol',
-          },
-           
-      ];
-    
+const index = (props) => {
+  const {navigate} = useNavigation();
+  const [fuelList, setFuelList] = useState();
+  const { params: { latestdata = null } = {} } = useRoute();
 
-    return (
-        <View>    
-            <CustomHeader isHome={true} title='Fuel Tracker' />
-            <FuelTracking data={fuelTrackingData} />
-        </View>        
-    )
+  const DeleteRecord = async (id) => {
+    const updateRec = await delRecFuelTracking(id, props.userData.userReducer.user.id);
+    setFuelList(updateRec);
+  }
+
+  const EditRecord = async (item) => {
+    navigate('fuelTrackerEdit', {item});
 }
 
-export default index
+
+  const getFuelData = async () => {
+    const data = await userFuelList(props.userData.userReducer.user.id);
+    
+    setFuelList(data);
+  }
+
+  // { latestdata !== null ? getFuelData() : console.log('ok') }
+React.useEffect(()=>{
+  getFuelData()
+},[latestdata])
+  React.useEffect(() => {
+    getFuelData();
+    console.log("again")
+  }, []);
+
+  return (
+    <View>
+      <CustomHeader isHome={true} title='Fuel Tracker' />
+      <FuelTracking data={fuelList} DeleteRecord={DeleteRecord} EditRecord={EditRecord} />
+    </View>
+  )
+}
+function mapStateToProps(user) {
+  return {
+    userData: user
+
+  }
+}
+
+export default connect(mapStateToProps)(index);
