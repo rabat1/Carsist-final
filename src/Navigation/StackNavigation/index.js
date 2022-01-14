@@ -6,6 +6,8 @@ import Home from '../../Screens/App/User/Home';
 import Issue from '../../Screens/App/User/Issue'
 import MechanicSelection from '../../Screens/App/User/MechanicSelection'
 import MechanicDetails from '../../Screens/App/Mechanic/MechanicDetails'
+import UserDocument from '../../Screens/App/User/UserDocument';
+import Document from '../../Screens/App/User/Document';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
@@ -37,6 +39,18 @@ export function FuelTrackStack(){
         <ApplicationStack.Screen name='mechanicSelection' component={MechanicSelection} options={{headerShown:false}}/>
         <ApplicationStack.Screen name='mechanicDetails' component={MechanicDetails} options={{headerShown:false}}/>
        
+      </ApplicationStack.Navigator>
+    )
+  }
+
+  export function UserDocumentStack()
+  {
+    return(
+      <ApplicationStack.Navigator initialRouteName='userDocument'>
+      <ApplicationStack.Screen name='userDocument' component={UserDocument} options={{headerShown:false}}/>
+      <ApplicationStack.Screen name='Document' component={Document} />
+       
+        
       </ApplicationStack.Navigator>
     )
   }

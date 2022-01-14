@@ -178,6 +178,51 @@ await firestore()
   })
 }
 
+async function getUserDocuments(uid)
+{ 
+  let data =[];
+  const querySnapshot = await firestore()
+  .collection('UserDocuments')
+  // Filter results
+  .where('uid', '==',uid)
+  .get();
+  querySnapshot.forEach((doc) => {
+    // console.log(doc.id, ' => ', doc.data());
+  data.push({...doc.data(),id:doc.id});
+});
+return data;
+}
+async function uploadDocument(response)
+{
+  const reference = storage().ref('user-documents/' + response['name']);
+  await reference.putFile(response["uri"]);
+  const url = await storage().ref('user-documents/'+ response['name']).getDownloadURL();
+  return url;
+}
+
+async function addUserDocument(response,uid,password)
+{
+ 
+  const url = await uploadDocument(response);
+  console.log(url,response,uid,password)
+  await firestore()
+  .collection('UserDocuments')
+  .add({
+   url:url,
+   name:response['name'],
+   uid:uid,
+   createdAt: firestore.FieldValue.serverTimestamp(),
+   password:password
+  })
+  .then(() => {
+    console.log('Document added');
+  });
+  return url;
+
+}
+
+
+
 async function uploadImage(folder,response)
 {
   const reference = storage().ref(folder + response['fileName']);
@@ -185,6 +230,7 @@ async function uploadImage(folder,response)
   const url = await storage().ref(folder+ response['fileName']).getDownloadURL();
   return url;
 }
+
 
 //'shop images/'
 async function registerMechanic(params)
@@ -205,32 +251,9 @@ async function registerMechanic(params)
 }
 
 
-
-// async function uploadMechanicInfo(params)
-// {
-//   // const {id,shopName,address,services,cnic,slipImage,shopImage} = params;
-//   // console.log(params,id);
-
-//   const shopUrl = await uploadImage('shop images/',shopImage);
-//   const slipUrl = await uploadImage('registration-slip/',slipImage);
-
-//   await firestore()
-//   .collection('mechanic')
-//   .doc(id)
-//   .update({
-//     shopName,address,services,cnic,shopUrl,slipUrl
-//   });
-// return;
-//   // return(shopName,address,services,cnic,shopUrl,slipUrl);
-
-
-  
-// }
-
-
 export{
     registerUser,loginUser,getUser,updateStatus,registerMechanic,getMechanic,delRecFuelTracking,userExpenseList, addRecFuelTracking, userFuelList, editRecFuelTracking
-    
+    ,uploadDocument,addUserDocument,getUserDocuments
 }
 
 

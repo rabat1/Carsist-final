@@ -3,12 +3,11 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '../../Screens/App/User/Home';
 import Expenses from '../../Screens/App/User/Expenses';
 import UserHistory from '../../Screens/App/User/UserHistory';
-import UserDocument from '../../Screens/App/User/UserDocument';
 import Reminders from '../../Screens/App/User/Remiders';
 import FuelTracker from '../../Screens/App/User/FuelTracker';
 import Icon from '../../Utils/Icon';
 import Colors from '../../Utils/Colors';
-import { ExpenseStack, FuelTrackStack, HomeStack } from '../StackNavigation';
+import { ExpenseStack, FuelTrackStack, HomeStack,UserDocumentStack} from '../StackNavigation';
 
 const Tab = createBottomTabNavigator();
 
@@ -77,7 +76,7 @@ export default function HomeTabs() {
   <Tab.Screen  name="FuelTracker" component={FuelTrackStack} />
   <Tab.Screen  name="Remiders" component={Reminders} />
   <Tab.Screen  name="Expenses" component={ExpenseStack} />
-  <Tab.Screen  name="UserDocs" component={UserDocument} />
+  <Tab.Screen  name="UserDocs" component={UserDocumentStack} />
 
     </Tab.Navigator>
   );
