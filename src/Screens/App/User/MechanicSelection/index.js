@@ -15,6 +15,8 @@ const index = () => {
                 <CustomHeader title='Select Mechanic' />
         
             <Text>select Mechanic</Text>
+            <Text>Recommendations</Text>
+           
             <CustomButton title='Select' primary onPress={onPress}  />
         </View>
     )

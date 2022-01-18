@@ -3,32 +3,31 @@ import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import messaging from '@react-native-firebase/messaging';
 
-async function registerUser(authparams)
-{  
-    const {name,email,contact,password} = authparams;
-    const {user} = await auth().createUserWithEmailAndPassword(email,password);
-      
-      user.sendEmailVerification();
-      
-      let uid=user.uid.toString();
-      let mechanic=false;
-      
-      await firestore().collection('users').doc(uid).set({
-          name,email,contact,mechanic
-      });
-      // const {_data} = await firestore().collection('users').doc(uid).get();
-      // _data.id=uid;
-      // return _data;
+async function registerUser(authparams) {
+  const { name, email, contact, password } = authparams;
+  const { user } = await auth().createUserWithEmailAndPassword(email, password);
+
+  user.sendEmailVerification();
+
+  let uid = user.uid.toString();
+  let mechanic = false;
+
+  await firestore().collection('users').doc(uid).set({
+    name, email, contact, mechanic
+  });
+  // const {_data} = await firestore().collection('users').doc(uid).get();
+  // _data.id=uid;
+  // return _data;
   //     if (user.emailVerified) {
   //    }
   // else {
   //    console.log('Not verified');
   // }
-   
-    
-   
-    
-  
+
+
+
+
+
 }
 
 async function saveTokenToDatabase(token) {
@@ -73,116 +72,139 @@ async function loginUser(email, password) {
 }
 
 
-async function getUser(uid)
-{
-  const {_data} = await firestore().collection('users').doc(uid).get();
-  console.log('getuserdata',_data);
-  console.log('getuserdata',_data.email);
-  _data.id=uid;
-  
+async function getUser(uid) {
+  const { _data } = await firestore().collection('users').doc(uid).get();
+  console.log('getuserdata', _data);
+  console.log('getuserdata', _data.email);
+  _data.id = uid;
+
   return _data;
 }
 
-async function getMechanic(uid)
-{
-  const {_data} = await firestore().collection('mechanic').doc(uid).get();
+async function getMechanic(uid) {
+  const { _data } = await firestore().collection('mechanic').doc(uid).get();
   // console.log('getuserdata',_data);
   // console.log('getuserdata',_data.email);
-  _data.id=uid;
-  
+  _data.id = uid;
+
   return _data;
 }
 
-//expense list by rabat
-async function userExpenseList(uid)
-{
-  const {_data} = await firestore().collection('users').doc(uid).get();
-  _data.id=uid;
-  expenses= _data.expenses;
-  return expenses;
+async function getMechanicRatings(mechanicid) {
+  var mechanicRatingData = [];
+console.log('calll')
+  const data = await firestore().collection('ratings').where('mechanicid', '==', mechanicid)
+    .get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+        mechanicRatingData.push(doc.data());
+      })
+    })
+    .catch()
+
+  return mechanicRatingData;
+
+
 }
+
+async function setMechanicRatings(mechanicid, rating) {
+
+  const userId = auth().currentUser.uid;
+  await firestore().collection('ratings').doc().set({
+    mechanicid: mechanicid,
+    givenby: userId,
+    value: rating,
+  })
+
+}
+
+
+//expense list by rabat
+async function userExpenseList() {
+  const userId = auth().currentUser.uid;
+  var expenseData = [];
+
+  await firestore().collection('expenses').where('userid', '==', userId)
+    .get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+        expenseData.push(doc.data());
+      })
+    })
+    .catch()
+  return expenseData;
+}
+
 async function addRecFuelTracking(form, uid) {
 
-  const { _data } = await firestore().collection('users').doc(uid).get();
-  var tempArray = [];
-  for (var i = 0; i < _data.fuelList.length; i++) {
-    tempArray.push(_data.fuelList[i].id);
-  }
-  RandomIdGenerator();
+  const userId = auth().currentUser.uid;
+  let makeId = Math.floor((Math.random() * 634));
+  form.id = makeId;
+  form.userid = userId;
+  console.log('neww', form);
+  await firestore().collection('FuelList').doc().set({
+    form
+  })
 
-  function RandomIdGenerator() {
-    let makeId = Math.floor((Math.random() * 634));
-
-    if (!tempArray.includes(makeId)) {
-      form.id = makeId;
-      firestore().collection('users').doc(uid).update({
-        fuelList: firestore.FieldValue.arrayUnion(form)
-      });
-    }
-    else if (tempArray.includes(makeId)) {
-      RandomIdGenerator();
-    }
-  }
-  const latestdata = await userFuelList(uid);
+  const latestdata = await userFuelList();
   return latestdata;
 }
 
 async function editRecFuelTracking(updatedData, uid) {
 
-  const { _data } = await firestore().collection('users').doc(uid).get();
-  let fuelList;
-  fuelList = _data.fuelList;
-  const items = fuelList.filter(item => item.id !== updatedData.id);
-  const temp = await firestore().collection('users').doc(uid).set({
-    fuelList: items
-  }, { merge: true })
+  const userId = auth().currentUser.uid;
 
-  await firestore().collection('users').doc(uid).update({
-    fuelList: firestore.FieldValue.arrayUnion(updatedData)
-  });
-
+  let form = updatedData;
+  await firestore().collection('FuelList').where('form.userid', '==', userId).where('form.id', '==', updatedData.id)
+    .get()
+    .then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        //  console.log(doc.id, " => ", doc.data());
+        doc.ref.set({ form })
+      });
+    })
   const latestdata = await userFuelList(uid);
   return latestdata;
 
 }
 
 async function delRecFuelTracking(id, uid) {
-  const { _data } = await firestore().collection('users').doc(uid).get();
-  let fuelList;
-  fuelList = _data.fuelList;
-  const items = fuelList.filter(item => item.id !== id);
-  await firestore().collection('users').doc(uid).set({
-    fuelList: items
-  }, { merge: true })
-  return items;
 
-
-
+  await firestore().collection('FuelList').where('form.userid', '==', uid).where('form.id', '==', id)
+    .get()
+    .then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        doc.ref.delete();
+      });
+    })
+  const latestdata = await userFuelList(uid);
+  return latestdata;
 }
 
 async function userFuelList(uid) {
-  console.log('callll')
-
-  const { _data } = await firestore().collection('users').doc(uid).get();
-  let fuelList;
-  fuelList = _data.fuelList;
-  console.log('callll')
-  return fuelList;
-}
 
 
+  const userId = auth().currentUser.uid;
+  var fuelRecord = [];
 
-
-
-async function updateStatus(uid)
-{
-await firestore()
-  .collection('users')
-  .doc(uid)
-  .update({
-    emailVerified : true
+  await firestore().collection('FuelList').where('form.userid', '==', userId).get().then(snapshot => {
+    snapshot.forEach(doc => {
+      fuelRecord.push(doc.data().form);
+    })
   })
+    .catch()
+  return fuelRecord;
 }
+
+async function updateStatus(uid) {
+  await firestore()
+    .collection('users')
+    .doc(uid)
+    .update({
+      emailVerified: true
+    })
+}
+
 
 async function getUserDocuments(uid)
 { 
@@ -229,37 +251,36 @@ async function addUserDocument(response,uid,password)
 
 
 
-async function uploadImage(folder,response)
-{
+
+async function uploadImage(folder, response) {
   const reference = storage().ref(folder + response['fileName']);
   await reference.putFile(response["uri"]);
-  const url = await storage().ref(folder+ response['fileName']).getDownloadURL();
+  const url = await storage().ref(folder + response['fileName']).getDownloadURL();
   return url;
 }
 
 
 //'shop images/'
-async function registerMechanic(params)
-{
-  const {name,email,contact,password,shopName,address,services,cnic,slipImage,shopImage} = params;
-  const {user} = await auth().createUserWithEmailAndPassword(email,password);
+async function registerMechanic(params) {
+  const { name, email, contact, password, shopName, address, services, cnic, slipImage, shopImage } = params;
+  const { user } = await auth().createUserWithEmailAndPassword(email, password);
 
   user.sendEmailVerification();
-  const shopUrl = await uploadImage('shop images/',shopImage);
-  const slipUrl = await uploadImage('registration-slip/',slipImage);
-  
-  let uid=user.uid.toString();
-    
-    await firestore().collection('mechanic').doc(uid).set({
-        name,email,contact,status:'pending',shopName,address,services,cnic,shopUrl,slipUrl
-    });
-    return uid;
+  const shopUrl = await uploadImage('shop images/', shopImage);
+  const slipUrl = await uploadImage('registration-slip/', slipImage);
+
+  let uid = user.uid.toString();
+
+  await firestore().collection('mechanic').doc(uid).set({
+    name, email, contact, status: 'pending', shopName, address, services, cnic, shopUrl, slipUrl
+  });
+  return uid;
 }
 
-
-export{
-    registerUser,loginUser,getUser,updateStatus,registerMechanic,getMechanic,delRecFuelTracking,userExpenseList, addRecFuelTracking, userFuelList, editRecFuelTracking
-    ,uploadDocument,addUserDocument,getUserDocuments
+export {
+  registerUser, loginUser, getUser, updateStatus, registerMechanic, getMechanic, delRecFuelTracking, userExpenseList,
+  addRecFuelTracking, userFuelList, editRecFuelTracking, setMechanicRatings, getMechanicRatings
+,uploadDocument,addUserDocument,getUserDocuments,
 }
 
 

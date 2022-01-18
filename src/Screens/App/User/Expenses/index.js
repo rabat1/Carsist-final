@@ -13,20 +13,18 @@ const index = (props) => {
       
   const getExpenseData=async ()=>{
     
-  const data= await userExpenseList(props.userData.userReducer.user.id);
+  const data= await userExpenseList();
   console.log('data',data);
   setExpenseList(data);
 }
 
 
 React.useEffect(()=>{
-  console.log('calledd')
     getExpenseData();
-   
- },[]);
+},[]);
 
- React.useEffect(()=>{
-},[expenseList]);
+//  React.useEffect(()=>{
+// },[expenseList]);
 
  
     return (
@@ -53,6 +51,4 @@ function mapStateToProps(user) {
     
   }
 }
-
-
 export default connect(mapStateToProps)(index);
