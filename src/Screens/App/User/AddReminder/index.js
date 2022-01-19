@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Modal } from 'react-native'
 // import { NativeBaseProvider, Box, Alert, Text, Modal, Button } from 'native-base'
 import { CustomHeader } from '../../../../Navigation/CustomHeader'
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
@@ -15,9 +15,9 @@ const index = () => {
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     // setShow(Platform.OS === 'ios');
+    setShow(false);
     setDate(currentDate);
     console.log(date);
-    console.log(currentDate);
   };
 
   const showDatepicker = () => {
