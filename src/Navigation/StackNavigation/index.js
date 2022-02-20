@@ -1,6 +1,8 @@
 import React from 'react'
 import FuelTrackerEdit from '../../Screens/App/User/FuelTrackerEdit';
 import FuelTracker from '../../Screens/App/User/FuelTracker';
+import Reminders from '../../Screens/App/User/Remiders';
+import addReminder from '../../Screens/App/User/AddReminder';
 import Expenses from '../../Screens/App/User/Expenses'
 import Home from '../../Screens/App/User/Home';
 import Issue from '../../Screens/App/User/Issue'
@@ -48,13 +50,24 @@ export function FuelTrackStack(){
     return(
       <ApplicationStack.Navigator initialRouteName='userDocument'>
       <ApplicationStack.Screen name='userDocument' component={UserDocument} options={{headerShown:false}}/>
-      <ApplicationStack.Screen name='Document' component={Document} />
+      <ApplicationStack.Screen name='Document' component={Document} options={{headerShown:false}} />
        
         
       </ApplicationStack.Navigator>
     )
   }
 
+  export function ReminderStack()
+  {
+    return(
+      <ApplicationStack.Navigator initialRouteName=''>
+      <ApplicationStack.Screen name='Reminders' component={Reminders} options={{headerShown:false}}/>
+      <ApplicationStack.Screen name='addReminder' component={addReminder} options={{headerShown:false}}/>
+       
+        
+      </ApplicationStack.Navigator>
+    )
+  }
 
   
 
