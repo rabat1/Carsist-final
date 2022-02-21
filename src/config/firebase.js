@@ -15,19 +15,6 @@ async function registerUser(authparams) {
   await firestore().collection('users').doc(uid).set({
     name, email, contact, mechanic
   });
-  // const {_data} = await firestore().collection('users').doc(uid).get();
-  // _data.id=uid;
-  // return _data;
-  //     if (user.emailVerified) {
-  //    }
-  // else {
-  //    console.log('Not verified');
-  // }
-
-
-
-
-
 }
 
 async function saveTokenToDatabase(token) {
@@ -52,19 +39,6 @@ async function loginUser(email, password) {
       saveTokenToDatabase(token);
     });
 
-
-  //  let  uid =user.uid;
-  ////user = userCredential.user.uid.toString();
-
-
-
-  // if (docSnap.exists()) {
-  //   console.log("Document data:", docSnap.data());
-  // } else {
-  //   // doc.data() will be undefined in this case
-  //   console.log("No such document!");
-  // }
-
   return user;
 
   // user = userCredential.user.uid.toString();
@@ -81,26 +55,67 @@ async function getUser(uid) {
   return _data;
 }
 
-async function getMechanic(uid) {
-  const { _data } = await firestore().collection('mechanic').doc(uid).get();
-  // console.log('getuserdata',_data);
-  // console.log('getuserdata',_data.email);
-  _data.id = uid;
-
-  return _data;
-}
-
-async function getMechanicRatings(mechanicid) {
-  var mechanicRatingData = [];
-console.log('calll')
-  const data = await firestore().collection('ratings').where('mechanicid', '==', mechanicid)
+async function getMechanicList() {
+  const mechanicList=[];
+  const data = await firestore().collection('mechanic')
     .get()
     .then(snapshot => {
       snapshot.forEach(doc => {
+        mechanicList.push(doc.data());
+        // const id = doc.id;
+        // console.log('mechId',id);
+      })
+    })
+    .catch()
+    
+
+   
+  return mechanicList;
+}
+
+
+
+async function getMechanic(uid) {
+  
+  var mechanic = [];
+  console.log('calll')
+    const data = await firestore().collection('mechanic').where('address', '==', uid)
+      .get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          mechanic.push(doc.data());
+        })
+      })
+      .catch()
+  
+  return mechanic;
+}
+
+async function getMechanicRatings(mechanicAdd) {
+  
+  var mechanicRatingData = [];
+  var mechid='';
+console.log('calll')
+  const data = await firestore().collection('mechanic').where('address', '==', mechanicAdd)
+    .get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+        mechid=doc.id;
+      })
+    })
+    .catch()
+    
+    const data1 = await firestore().collection('ratings').where('mechanicid', '==', mechid)
+    .get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+      
         mechanicRatingData.push(doc.data());
       })
     })
     .catch()
+  
+
 
   return mechanicRatingData;
 
@@ -280,7 +295,7 @@ async function registerMechanic(params) {
 export {
   registerUser, loginUser, getUser, updateStatus, registerMechanic, getMechanic, delRecFuelTracking, userExpenseList,
   addRecFuelTracking, userFuelList, editRecFuelTracking, setMechanicRatings, getMechanicRatings
-,uploadDocument,addUserDocument,getUserDocuments,
+,uploadDocument,addUserDocument,getUserDocuments,getMechanicList,
 }
 
 
