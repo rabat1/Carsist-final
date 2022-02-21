@@ -67,7 +67,6 @@ async function getMechanicList() {
       })
     })
     .catch()
-    console.log('abayyy',mechanicList);
     
 
    
