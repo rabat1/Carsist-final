@@ -12,10 +12,10 @@ const index = () => {
     const { navigate } = useNavigation();
     const [mechList, setMechList] = useState({});
 
-    const onPress = (addressU) => {
+    const onPress = (mechanicId) => {
     
         //you've to send the id which user selected with navigate
-        navigate('mechanicDetails',{addressU})
+        navigate('mechanicDetails',{mechanicId})
     }
     const getMechanics = async () => {
         const data = await getMechanicList();
@@ -40,7 +40,7 @@ const index = () => {
                 {mechList.length > 0 ? (mechList.map((element) => {
                     return (
                         <>
-                            <TouchableOpacity onPress={()=>onPress(element.address)} key={element.key} style={styles.listContainer}>
+                            <TouchableOpacity onPress={()=>onPress(element.id)} key={element.id} style={styles.listContainer}>
                                 <View style={{ flex: 1, justifyContent: 'center' }}>
                                     <Image width={45} height={45} source={{ uri: element.shopUrl }} style={styles.img} />
                                 </View>

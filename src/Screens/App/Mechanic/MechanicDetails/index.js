@@ -20,7 +20,7 @@ const index = (props) => {
 
   const [addressUnique,setAddressU]= useState('');
 
-    const { params: { addressU } = {} } = useRoute();
+    const { params: { mechanicId } = {} } = useRoute();
     
   async function onMechanicSelected() {
     
@@ -41,16 +41,14 @@ const index = (props) => {
 
   const MechData = async () => {
     //here give that id which user seleceted mechanic
-    const data = await getMechanic(addressU);
-    const output = Object.assign({}, ...data)
-    
-    setAddress(output.address)
-    setName(output.name)
-    setContact(output.contact)
-    setShopName(output.shopName)
-    setMechId(output.id)
-    setServices(output.services)
-    console.log('outputaa', output)
+    const data = await getMechanic(mechanicId);
+    setAddress(data.address)
+    setName(data.name)
+    setContact(data.contact)
+    setShopName(data.shopName)
+    setMechId(data.id)
+    setServices(data.services)
+    console.log('dataaa', data)
   }
   React.useEffect(() => {
     MechData();
@@ -70,7 +68,7 @@ const index = (props) => {
         </View>
 
 
-        <Ratings disable={true} mechAddress={addressU} />
+         <Ratings disable={true} mechanic_id={mechanicId} />
 
         <MechanicServices services={services} />
         {/* give mechanic_id to services component */}

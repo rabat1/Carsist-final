@@ -6,7 +6,7 @@ import StarRating from 'react-native-star-rating';
 import Colors from '../../Utils/Colors';
 import styles from './styles'
 
-const index = ({disable,mechAddress}) => {
+const index = ({disable,mechanic_id}) => {
     const [rating, setRating] = useState(0);
 
 
@@ -16,8 +16,8 @@ const index = ({disable,mechAddress}) => {
              await setMechanicRatings(mechanic_id,rating);
            }
   
-    const GetRatings = async (mechanic_add) => {
-        const ratings = await getMechanicRatings(mechanic_add)
+    const GetRatings = async (mechanic_id) => {
+        const ratings = await getMechanicRatings(mechanic_id)
         var calculateAvg = 0;
         var totalRatings = ratings.length;
         var avgRating;
@@ -31,7 +31,7 @@ const index = ({disable,mechAddress}) => {
     }
   
     React.useEffect(()=>{
-       {disable?GetRatings(mechAddress):null}
+       {disable?GetRatings(mechanic_id):null}
     },[])
 
     return (

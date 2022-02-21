@@ -61,12 +61,13 @@ async function getMechanicList() {
     .get()
     .then(snapshot => {
       snapshot.forEach(doc => {
-        mechanicList.push(doc.data());
+        mechanicList.push({...doc.data(),id:doc.id});
         // const id = doc.id;
         // console.log('mechId',id);
       })
     })
     .catch()
+    console.log('abayyy',mechanicList);
     
 
    
@@ -75,36 +76,21 @@ async function getMechanicList() {
 
 
 
-async function getMechanic(uid) {
+async function getMechanic(mechId) {
+
+  const { _data } = await firestore().collection('mechanic').doc(mechId).get();
+  console.log('getuserdata', _data);
+  console.log('getuserdata', _data.email);
+  _data.id = mechId;
+
+  return _data;
+
   
-  var mechanic = [];
-  console.log('calll')
-    const data = await firestore().collection('mechanic').where('address', '==', uid)
-      .get()
-      .then(snapshot => {
-        snapshot.forEach(doc => {
-          mechanic.push(doc.data());
-        })
-      })
-      .catch()
-  
-  return mechanic;
 }
 
-async function getMechanicRatings(mechanicAdd) {
+async function getMechanicRatings(mechid) {
   
   var mechanicRatingData = [];
-  var mechid='';
-console.log('calll')
-  const data = await firestore().collection('mechanic').where('address', '==', mechanicAdd)
-    .get()
-    .then(snapshot => {
-      snapshot.forEach(doc => {
-        mechid=doc.id;
-      })
-    })
-    .catch()
-    
     const data1 = await firestore().collection('ratings').where('mechanicid', '==', mechid)
     .get()
     .then(snapshot => {
@@ -115,8 +101,6 @@ console.log('calll')
     })
     .catch()
   
-
-
   return mechanicRatingData;
 
 
