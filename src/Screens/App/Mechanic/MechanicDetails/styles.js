@@ -8,7 +8,8 @@ export default StyleSheet.create({
         marginTop:'5%',
         fontSize:20,
         color:Colors.primaryDark,
-        fontWeight:'700'},
+        fontFamily:'Sofia-Regular'
+    },
  
 }); 
 

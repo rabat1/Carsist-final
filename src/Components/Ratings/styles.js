@@ -11,6 +11,8 @@ export default StyleSheet.create({
   ratingsText: {
     fontSize: 18, 
     color: Colors.primaryDark },
-    containerStyle:{ width: '60%', alignSelf: 'center',marginLeft:'5%' }
+    containerStyle:{ width: '60%', alignSelf: 'center',marginLeft:'5%',
+  fontFamily:'Sofia-Regular',
+  }
 
 }); 

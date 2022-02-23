@@ -12,6 +12,16 @@ const index = ({
     slipData,
     setSlipData}) => {
 
+        const ExpenseDataComp=(props)=>{
+            return(
+            <View style={styles.textWrapper}>
+                <Text style={styles.label}>{props.label} </Text>
+                <Text style={styles.label}>{props.value} </Text>
+            </View>
+       
+            );
+        }
+
     const ListEmptyComponent=()=>{
         return(
         <View style={{ paddingVertical:50, alignSelf:'center'}}>
@@ -41,22 +51,12 @@ const index = ({
     
                      <View style={styles.verticalSeperator} >
 
-                         <View style={styles.textWrapper}>
-                             <Text style={styles.label}>Date: </Text>
-                             <Text style={styles.label}>{date} </Text>
-                        </View>
-                        <View style={styles.textWrapper}>
-                             <Text style={styles.label}>Cost: </Text>
-                             <Text style={styles.label}>{cost} </Text>
-                        </View>
-                        <View style={styles.textWrapper}>
-                             <Text style={styles.label}>Mechanic: </Text>
-                             <Text style={styles.label}>{mechanic_name} </Text>
-                        </View>
-                        <View style={styles.textWrapper}>
-                             <Text style={styles.label}>Odometer: </Text>
-                             <Text style={styles.label}>{odometer} </Text>
-                        </View>
+                    <ExpenseDataComp label='Date' value={date} />
+                    <ExpenseDataComp label='Cost' value={cost} />
+                    <ExpenseDataComp label='Mechanic' value={mechanic_name} />
+                    <ExpenseDataComp label='Odometer' value={odometer} />
+
+
                       
                      </View>
                      <Icon name='right' type='ant' size={17} color={Colors.primaryDark} />
@@ -71,7 +71,7 @@ return()=>{}
 },[modalVisible,slipData]);
 
     return (
-        <View style={{marginTop:10, backgroundColor:Colors.white}}>
+        <View style={{ backgroundColor:Colors.white,minHeight:'100%'}}>
             
             <FlatList
             keyExtractor={(item)=>String(item.mechanic_name)} 
@@ -93,7 +93,9 @@ return()=>{}
              modalBody={
                     <View style={{paddingTop:5,}}>
                          <View style={styles.imageContainer}>
-                          <Image style={styles.image} width={100} height={100} source={{uri:'https://images.hdqwalls.com/wallpapers/sea-green-lamborghini-aventador-4k-9g.jpg'}} />
+                         <Image
+                        style={styles.image}
+                        source={require('../../../assets/Images/carlogo.png')}/>
                          </View>
                         
                         <Text style={styles.slipText} >{`Service : ${slipData.service_name}`}</Text>

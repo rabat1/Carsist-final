@@ -49,9 +49,7 @@ const index = (props) => {
             <View style={style.divider}></View>
             <View style={style.divider}></View>
             <View style={style.divider}></View>
-            <View style={style.divider}></View>
-            <View style={style.divider}></View>
-            <Text style={{fontSize:16,marginTop:5,color:Colors.primaryDark,textAlign:'center'}}>
+            <Text style={style.formTitle}>
                 Please Fill out the Form</Text>
 
             <View style={{paddingHorizontal:15}}>

@@ -12,8 +12,9 @@ const SideMenu = ({navigation}) => {
   const dispatch = useDispatch()
     const menuItems=[
       {icon:<Icon color={Colors.primaryDark} type='material' name='home' size={22} />, name:'HomeTab', onPress:()=>{navigation.navigate('HomeTab')}},
-        {icon:<Icon color={Colors.primaryDark} type='material' name='logout' size={22} />, name:'Logout', onPress:()=>{dispatch(updateUser())}}
-      
+        {icon:<Icon color={Colors.primaryDark} type='material' name='logout' size={22} />, name:'Logout', onPress:()=>{dispatch(updateUser())}},
+        {icon:<Icon color={Colors.primaryDark} type='material' name='rule' size={22} />, name:'Traffic Rules', onPress:()=>{navigation.navigate('TrafficRules')}}
+    
     ]
     return(
         <SafeAreaView>

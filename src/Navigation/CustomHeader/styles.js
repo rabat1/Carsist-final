@@ -18,8 +18,8 @@ export default StyleSheet.create({
     },
     headerText:{
         textAlign:'center',
-        fontSize:18,
-        fontWeight:'bold',
+        fontSize:22,
         color:Colors.secondary,
+        fontFamily:'Charm-Bold'
     }
 })

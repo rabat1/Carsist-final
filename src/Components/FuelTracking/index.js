@@ -5,7 +5,6 @@ import Icon from '../../Utils/Icon';
 import styles from './styles';
 import { List } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/core';
-import { delRecFuelTracking } from '../../config/firebase';
 import { connect } from 'react-redux';
 
 
@@ -16,7 +15,7 @@ const ListComponent = (props) => {
             <List.Item style={styles.itemContainer}
                 titleStyle={{ height: 15, }}
                 title={
-                    <View style={{ flexDirection: 'row', }}>
+                    <View style={{ flexDirection: 'row',alignItems:'center' }}>
                         <Icon name={props.iconName} type='fa' size={18} color={Colors.primaryDark} />
                         <Text style={[styles.itemText]}>{props.label} :</Text>
                         <Text style={[styles.itemText, styles.itemTextValue]}>{props.value}</Text>
@@ -31,9 +30,6 @@ const ListComponent = (props) => {
 const index = (props) => {
     const { navigate } = useNavigation();
 
-    // const screenHeight = Dimensions.get('window').height; 
-    //     const [expanded, setExpanded] = React.useState(true);
-    //     const handlePress = () => setExpanded(!expanded);   
     return (
         <>
 
@@ -43,22 +39,20 @@ const index = (props) => {
             </View>
 
             <ScrollView>
-                <List.Section title="Your's car fuel History"
-                    titleStyle={{ fontSize: 18, alignSelf: 'center', color: Colors.primaryDark }}
+                <List.Section title="Your Car's Fuel History"
+                    titleStyle={styles.title}
                     style={{ backgroundColor: Colors.white }}
                 >
 
                     {props.data ? props.data.map((item) => (
 
                         <>
-                            {/* {console.log(item.id)
-            } */}
-                            <List.Accordion key={item.id}
+                         <List.Accordion key={item.id}
                                 theme={{ colors: { primary: Colors.white } }}
                                 style={{ backgroundColor: Colors.primary, paddingVertical: 0, marginTop: 8 }}
                                 title={item.date}
                                 left={props => <List.Icon {...props} icon="fuel" />}
-                                titleStyle={{ color: Colors.white }}
+                                titleStyle={{ color: Colors.white,fontFamily:'Charm-Bold' }}
                             >
                                 <ListComponent value={item.cost} label='Cost' iconName='money' />
                                 <ListComponent value={item.amount} label='Amount' iconName='wpforms' />

@@ -32,7 +32,14 @@ const CustomButton = ({
          style={[styles.wrapper,{backgroundColor:getBgColor()},style]}>
                 <View style={[styles.loadingSection]}>
                  {loading&& <ActivityIndicator color={primary?Colors.blue:Colors.secondary}/>}   
-                {title&&<Text style={{color: disabled?'black':Colors.white, paddingLeft: loading?5:0}}>{loading ? 'Please wait': title}</Text>}
+                {title&&
+                <Text style={{
+                    color: disabled?'black':Colors.white,
+                     paddingLeft: loading?5:0,
+                     fontFamily:'Charm-Bold',fontSize:16}}>
+                    {loading ? 'Please wait': title}
+                </Text>
+                }
 
                 </View>
           
