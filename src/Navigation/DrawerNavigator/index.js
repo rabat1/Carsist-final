@@ -3,6 +3,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import SideMenu from './SideMenu';
 import BottomNavigator from '../BottomNavigator'
 import TrafficRules from '../../Screens/App/TrafficRules'
+import RuleDescription from '../../Screens/App/TrafficRules/RuleDescription'
 const getDrawerContents=(navigation)=>{
     return(
     <SideMenu navigation={navigation} />
@@ -20,6 +21,7 @@ const DrawerNavigator=()=>{
    
         <DrawerStack.Screen options={navOptionHandler} name='HomeTab' component={BottomNavigator} ></DrawerStack.Screen>
         <DrawerStack.Screen options={navOptionHandler} name='TrafficRules' component={TrafficRules} ></DrawerStack.Screen>
+        <DrawerStack.Screen options={navOptionHandler} name='RuleDescribe' component={RuleDescription} ></DrawerStack.Screen>
       
        
     </DrawerStack.Navigator>
