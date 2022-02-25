@@ -23,7 +23,6 @@ const index = (props) => {
     if(title=='Mandatory'){
         const data= await MandatoryRules();
         setRulesData(data);
-        console.log('length', data.length)
         
     }
     else if(title=='Informatory'){

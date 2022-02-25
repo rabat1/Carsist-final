@@ -1,22 +1,27 @@
 import { View, Text, FlatList, Dimensions, Image, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './styles';
 import Colors from '../../Utils/Colors';
 
 const index = (props) => {
   console.log('getdata', props.data);
   console.log('tit', props.title);
+  
   const SCREEN_WIDTH = Dimensions.get('window').width;
+const [refresh,setRefresh] = useState(true);
+useEffect(()=>{
+
+},[refresh])
 
   const renderView = ({ item, index }) => {
-
+    console.log('index',index)
     return (
 
       <View style={styles.sliderContainer}>
         {
-          index < (props.data.length - 1) ? <Text style={styles.title}>Slide to Next</Text> : <Text style={styles.title}>Already on Last Slide</Text>
+          index < (props.data.length - 1) ? <Text style={styles.title}>Slide to Next &#62;&#62;&#62;</Text> : <Text style={styles.title}>Already on Last Slide</Text>
         }
-        <Image width={250} height={250} style={styles.img} source={{ uri: 'http://www.shutterstock.com/blog/wp-content/uploads/sites/5/2016/03/fall-trees-road-1.jpg' }} />
+        <Image width={250} height={250} style={styles.img} source={item.image } />
         <Text style={[styles.title,{marginVertical:'3%',marginBottom:'0%'}]}>
           {item.title}
         </Text>
@@ -32,15 +37,17 @@ const index = (props) => {
   return (
     <ScrollView>
       <View style={styles.container}>
+        <Text style={[styles.title,{marginTop:'5%'}]}>{props.title} Traffic Rules</Text>
    <FlatList
         horizontal
         pagingEnabled={true}
         showsHorizontalScrollIndicator={false}
         legacyImplementation={false}
         data={props.data}
-        renderItem={item => renderView(item)}
+       renderItem={item => renderView(item)}
         keyExtractor={item => item.title}
         style={{ width: SCREEN_WIDTH + 5, height: '100%' }}
+      
       />
 </View>
     </ScrollView>

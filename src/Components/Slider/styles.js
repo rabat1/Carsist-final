@@ -9,34 +9,32 @@ export default StyleSheet.create({
         width: SCREEN_WIDTH + 5,
         height: 'auto',
         alignItems: "center",
-        marginTop: '10%',
-        minHeight: '100%',
-
-
-
     },
     img: {
-        width: 300,
-        height: 300,
-        borderRadius:50,
-        borderColor:Colors.primary,
-        borderWidth:5,
+        width: 250,
+        height: 250,
+        borderColor:Colors.primaryDark,
+        borderWidth:2,
+        resizeMode:'stretch'
     },
     container:
     {
         minHeight: 700,
-        backgroundColor: Colors.white
+        backgroundColor: Colors.primary,
+
     },
     title: {
-        color: Colors.primary,
+        color: Colors.white,
         marginBottom: '10%',
         fontSize: 20,
-        fontFamily: 'Sofia-Regular'
+        fontFamily: 'Sofia-Regular',
+        textAlign:'center'
     },
     descriptionText: {
-        color: Colors.primaryDark,
-        fontSize: 15,
-        fontFamily: 'Sofia-Regular'
+        color: Colors.white,
+        fontSize: 14,
+        marginHorizontal:16,
+
     }
 
 }); 
