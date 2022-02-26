@@ -11,7 +11,7 @@ import MechanicDetails from '../../Screens/App/Mechanic/MechanicDetails'
 import UserDocument from '../../Screens/App/User/UserDocument';
 import Document from '../../Screens/App/User/Document';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import Graph from '../../Screens/App/User/Graph'
 
 const ApplicationStack= createNativeStackNavigator();
 
@@ -29,7 +29,8 @@ export function FuelTrackStack(){
     return(
       <ApplicationStack.Navigator initialRouteName='expenses'>
         <ApplicationStack.Screen name='expenses' component={Expenses} options={{headerShown:false}}/>
-        
+        <ApplicationStack.Screen name='graph' component={Graph} options={{headerShown:false}}/>
+       
       </ApplicationStack.Navigator>
     )
   }

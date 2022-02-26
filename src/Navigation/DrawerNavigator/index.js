@@ -18,10 +18,12 @@ const DrawerNavigator=()=>{
     
     return(
     <DrawerStack.Navigator drawerContent={({navigation})=>getDrawerContents(navigation)}>
+          <DrawerStack.Screen options={navOptionHandler} name='HomeTab' component={BottomNavigator} ></DrawerStack.Screen>
+      
    
-        <DrawerStack.Screen options={navOptionHandler} name='HomeTab' component={BottomNavigator} ></DrawerStack.Screen>
-        <DrawerStack.Screen options={navOptionHandler} name='TrafficRules' component={TrafficRules} ></DrawerStack.Screen>
         <DrawerStack.Screen options={navOptionHandler} name='RuleDescribe' component={RuleDescription} ></DrawerStack.Screen>
+      
+        <DrawerStack.Screen options={navOptionHandler} name='TrafficRules' component={TrafficRules} ></DrawerStack.Screen>
       
        
     </DrawerStack.Navigator>

@@ -7,8 +7,7 @@ export default StyleSheet.create({
         paddingHorizontal:10,
         paddingVertical:7,
         alignItems:'center',
-      // justifyContent:'space-between',
-       flex:1,
+    
     },
     itemContainer:{
         paddingHorizontal:10,
@@ -18,13 +17,6 @@ export default StyleSheet.create({
     },
     textWrapper:{
         flexDirection:'row',
-    },
-    itemSeperator:{
-        height:0.5,
-        opacity:0.7,
-        backgroundColor:Colors.primaryDark,
-        width:'95%',
-        alignSelf:'center'
     },
     serviceName:{
         color:Colors.primaryDark,
@@ -56,4 +48,5 @@ export default StyleSheet.create({
       image:{
         width:90,height:75
       },
+      itemSeperator:{borderBottomEndRadius:2,borderBottomWidth:0.5},
 })

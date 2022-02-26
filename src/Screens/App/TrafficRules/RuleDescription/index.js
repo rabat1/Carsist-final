@@ -51,7 +51,7 @@ const index = (props) => {
     return (
 
         <View>
-            <CustomHeader title={titleHeader} isHome={true} />
+            <CustomHeader title={titleHeader} />
             
             <View >
             {title=="Mandatory"?<Slider title={title} data={rulesData} />:(

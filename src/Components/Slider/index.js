@@ -8,11 +8,6 @@ const index = (props) => {
   console.log('tit', props.title);
   
   const SCREEN_WIDTH = Dimensions.get('window').width;
-const [refresh,setRefresh] = useState(true);
-useEffect(()=>{
-
-},[refresh])
-
   const renderView = ({ item, index }) => {
     console.log('index',index)
     return (
