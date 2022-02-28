@@ -4,12 +4,11 @@ import styles from './styles';
 import Colors from '../../Utils/Colors';
 
 const index = (props) => {
-  console.log('getdata', props.data);
-  console.log('tit', props.title);
+  
   
   const SCREEN_WIDTH = Dimensions.get('window').width;
   const renderView = ({ item, index }) => {
-    console.log('index',index)
+  
     return (
 
       <View style={styles.sliderContainer}>
@@ -39,7 +38,7 @@ const index = (props) => {
         showsHorizontalScrollIndicator={false}
         legacyImplementation={false}
         data={props.data}
-       renderItem={item => renderView(item)}
+        renderItem={item => renderView(item)}
         keyExtractor={item => item.title}
         style={{ width: SCREEN_WIDTH + 5, height: '100%' }}
       
@@ -49,4 +48,4 @@ const index = (props) => {
   )
 }
 
-export default index
+export default index;

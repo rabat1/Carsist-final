@@ -6,31 +6,27 @@ import { LineChart } from 'react-native-chart-kit';
 
 const index = () => {
     const { params: { expenseList } = {} } = useRoute();
-    
-    const labels=[];
-    const data1=[];
 
-    for(var i=0;i<expenseList.length;i++){
+    const labels = [];
+    const data1 = [];
+
+    for (var i = 0; i < expenseList.length; i++) {
         labels.push(expenseList[i]['date']);
         data1.push(expenseList[i]['cost']);
     }
-    
-console.log('lab',labels)
-    console.log('cos',data1);
-    
-    
+
     const data = {
         labels: labels,
         datasets: [
-          {
-            data: data1,
-          color: (opacity = 1) => `rgb(29, 160, 153, ${opacity})`, // optional
-            strokeWidth: 3 // optional
-          }
+            {
+                data: data1,
+                color: (opacity = 1) => `rgb(29, 160, 153, ${opacity})`, // optional
+                strokeWidth: 3 // optional
+            }
         ],
         legend: ["Expenses Visualization"] // optional
-      };
-      const chartConfig = {
+    };
+    const chartConfig = {
         backgroundGradientFrom: "#1E2923",
         backgroundGradientFromOpacity: 0,
         backgroundGradientTo: 'white',
@@ -39,21 +35,21 @@ console.log('lab',labels)
         strokeWidth: 2, // optional, default 3
         barPercentage: 0.5,
         useShadowColorFromDataset: false // optional
-      };
+    };
 
-  return (
-    <View style={{backgroundColor:'white',minHeight:'100%'}}>
-        <CustomHeader title='Graph' />
-    <ScrollView horizontal={true}>
-      <LineChart
-        style={{alignSelf:'center'}}
-        data={data}
-        width={450}
-        height={420}
-        chartConfig={chartConfig} />
-    </ScrollView>
-    </View>
-  )
+    return (
+        <View style={{ backgroundColor: 'white', minHeight: '100%' }}>
+            <CustomHeader title='Graph' />
+            <ScrollView horizontal={true}>
+                <LineChart
+                    style={{ alignSelf: 'center' }}
+                    data={data}
+                    width={450}
+                    height={420}
+                    chartConfig={chartConfig} />
+            </ScrollView>
+        </View>
+    )
 }
 
 export default index

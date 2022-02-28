@@ -14,7 +14,7 @@ const index = (props) => {
   const [slipData, setSlipData] = useState('');
   const [expenseList, setExpenseList] = useState();
   const { navigate } = useNavigation();
-
+    
   const getExpenseData = async () => {
 
     const data = await userExpenseList();
@@ -22,19 +22,15 @@ const index = (props) => {
     setExpenseList(data);
   }
 
-
   React.useEffect(() => {
     getExpenseData();
   }, []);
-
 
   return (
     <View style={{ backgroundColor: 'white', minHeight: '100%' }}>
 
       <CustomHeader isHome={true} title='Expenses' />
       <ScrollView>
-
-
         <ServiceExpense
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
@@ -53,8 +49,6 @@ const index = (props) => {
       </ScrollView>
     </View>
   )
-
-
 }
 function mapStateToProps(user) {
   return {

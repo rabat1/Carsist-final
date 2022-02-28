@@ -4,7 +4,6 @@ import Icon from '../../Utils/Icon';
 import styles from './styles';
 import AppModal from '../AppModal';
 import Colors from '../../Utils/Colors';
-import CustomButton from '../CustomButton';
 import { useNavigation, useRoute } from '@react-navigation/core';
 import { ActivityIndicator } from 'react-native-paper';
 

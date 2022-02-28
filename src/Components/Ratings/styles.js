@@ -10,9 +10,9 @@ export default StyleSheet.create({
   },
   ratingsText: {
     fontSize: 18, 
-    color: Colors.primaryDark },
+    color: Colors.primaryDark,fontFamily:'Sofia-Regular',
+  },
     containerStyle:{ width: '60%', alignSelf: 'center',marginLeft:'5%',
-  fontFamily:'Sofia-Regular',
   }
 
 }); 
