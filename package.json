@@ -22,6 +22,7 @@
     "@react-navigation/drawer": "^6.1.8",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
+    "axios": "^0.26.0",
     "firebase": "^9.4.1",
     "firebase-admin": "^10.0.1",
     "native-base": "^3.2.2",

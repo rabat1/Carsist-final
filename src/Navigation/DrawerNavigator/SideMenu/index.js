@@ -12,6 +12,7 @@ const SideMenu = ({navigation}) => {
   const dispatch = useDispatch()
     const menuItems=[
       {icon:<Icon color={Colors.primaryDark} type='material' name='home' size={22} />, name:'HomeTab', onPress:()=>{navigation.navigate('HomeTab')}},
+      {icon:<Icon color={Colors.primaryDark} type='ant' name='user' size={22} />, name:'Profile', onPress:()=>{navigation.navigate('Profile')}},
         {icon:<Icon color={Colors.primaryDark} type='material' name='logout' size={22} />, name:'Logout', onPress:()=>{dispatch(updateUser())}}
       
     ]

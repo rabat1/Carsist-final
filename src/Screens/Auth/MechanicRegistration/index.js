@@ -4,9 +4,12 @@ import {
   View, Center, NativeBaseProvider, Box, Heading, VStack, FormControl,
   Input, Button, Spinner, Image, TextArea, ScrollView, Divider
 } from "native-base";
+import messaging from '@react-native-firebase/messaging';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { registerMechanic, uploadMechanicInfo } from '../../../config/firebase';
+
 
 export default function MechanicRegistration({ navigation }) {
   // console.log('params' + route.params);
@@ -40,6 +43,10 @@ export default function MechanicRegistration({ navigation }) {
       return;
     }
     try {
+      messaging().getToken().then( token=>{
+        
+
+      })
 
       await registerMechanic({ name, email, contact, password, shopName, address, services, cnic, slipImage, shopImage });
       setLoading(false);

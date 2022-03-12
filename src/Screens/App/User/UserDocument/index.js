@@ -127,7 +127,7 @@ const index = ({navigation}) => {
     // setShowModal(false);
     setIsOpen2(false);
 
-    navigation.navigate('Document', {currentUrl});
+    // navigation.navigate('Document', {currentUrl});
   };
   return (
     <NativeBaseProvider>
