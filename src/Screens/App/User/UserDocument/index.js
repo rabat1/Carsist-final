@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: 430,
+    top: '75%',
     right: 20,
   },
   pdf: {

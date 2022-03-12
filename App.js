@@ -18,7 +18,7 @@ const App= () => {
   return (
     <Provider store={store}>
     <PersistGate persistor={persistor}>
-     <AuthLoading/>
+     <AuthLoading  />
       
     </PersistGate>
     </Provider>

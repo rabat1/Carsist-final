@@ -21,7 +21,7 @@ const index = () => {
                         bgColor='teal.500'
                         position="absolute"
                         icon={<Icon size="full" color="white" as={<AntDesign name="plus" />} size="md" />}
-                        onPress={() => { navigate('addReminder') }}
+                       onPress={() => { navigate('addReminder') }}
                     />
                 </Box>
             </Box>

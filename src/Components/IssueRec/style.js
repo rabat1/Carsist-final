@@ -23,6 +23,14 @@ export default StyleSheet.create({
         color: Colors.white,
         fontSize: 20,
         textAlign: 'center',
+        fontFamily:'Sofia-Regular',
+    },
+    formTitle:{
+        fontSize:16,
+        marginTop:5,
+        color:Colors.primaryDark,
+        textAlign:'center',
+        fontFamily:'Sofia-Regular'
     },
     divider:{backgroundColor:Colors.primary, width:'84%', height:1, marginTop:3}
 });

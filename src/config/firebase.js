@@ -15,19 +15,6 @@ async function registerUser(authparams) {
   await firestore().collection('users').doc(uid).set({
     name, email, contact, mechanic
   });
-  // const {_data} = await firestore().collection('users').doc(uid).get();
-  // _data.id=uid;
-  // return _data;
-  //     if (user.emailVerified) {
-  //    }
-  // else {
-  //    console.log('Not verified');
-  // }
-
-
-
-
-
 }
 
 async function saveTokenToDatabase(token,userid,user) {
@@ -101,22 +88,42 @@ async function getMechanic(uid) {
    //console.log('getuserdata',_data);
   // console.log('getuserdata',_data.email);
   _data.id = uid;
+  return _data;}
 
-  return _data;
-}
-
-async function getMechanicRatings(mechanicid) {
-  var mechanicRatingData = [];
-console.log('calll')
-  const data = await firestore().collection('ratings').where('mechanicid', '==', mechanicid)
+async function getMechanicList() {
+  const mechanicList=[];
+  const data = await firestore().collection('mechanic')
     .get()
     .then(snapshot => {
       snapshot.forEach(doc => {
+        mechanicList.push({...doc.data(),id:doc.id});
+        // const id = doc.id;
+        // console.log('mechId',id);
+      })
+    })
+    .catch()
+    
+
+   
+  return mechanicList;
+}
+
+
+
+
+async function getMechanicRatings(mechid) {
+  
+  var mechanicRatingData = [];
+    const data1 = await firestore().collection('ratings').where('mechanicid', '==', mechid)
+    .get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+      
         mechanicRatingData.push(doc.data());
       })
     })
     .catch()
-
+  
   return mechanicRatingData;
 
 
@@ -321,7 +328,8 @@ async function updateMechanicProfile(params)
 export {
   registerUser, loginUser, getUser, updateStatus, registerMechanic, getMechanic, delRecFuelTracking, userExpenseList,
   addRecFuelTracking, userFuelList, editRecFuelTracking, setMechanicRatings, getMechanicRatings
-,uploadDocument,addUserDocument,getUserDocuments,generateUserToken,updateUserProfile,updateMechanicProfile
+,generateUserToken,updateUserProfile,updateMechanicProfile
+,uploadDocument,addUserDocument,getUserDocuments,getMechanicList,
 }
 
 

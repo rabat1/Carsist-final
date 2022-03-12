@@ -7,8 +7,7 @@ export default StyleSheet.create({
         paddingHorizontal:10,
         paddingVertical:7,
         alignItems:'center',
-      // justifyContent:'space-between',
-       flex:1,
+    
     },
     itemContainer:{
         paddingHorizontal:10,
@@ -19,18 +18,11 @@ export default StyleSheet.create({
     textWrapper:{
         flexDirection:'row',
     },
-    itemSeperator:{
-        height:0.5,
-        opacity:0.7,
-        backgroundColor:Colors.primaryDark,
-        width:'95%',
-        alignSelf:'center'
-    },
     serviceName:{
         color:Colors.primaryDark,
-        fontSize:16,
-        fontWeight:'700',
+        fontSize:20,
         paddingVertical:5,
+        fontFamily:'Redressed-Regular'
     },
     verticalSeperator:{
         borderLeftWidth:0.3,
@@ -51,9 +43,10 @@ export default StyleSheet.create({
         textAlign:'center',
       },
       imageContainer:{
-        marginBottom:15,borderRadius:50,alignItems:'center'
+        marginBottom:15,alignItems:'center'
       },
       image:{
-        width:100,height:100,borderRadius:50
+        width:90,height:75
       },
+      itemSeperator:{borderBottomEndRadius:2,borderBottomWidth:0.5},
 })

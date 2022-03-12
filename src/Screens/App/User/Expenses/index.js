@@ -1,54 +1,59 @@
 import React, { useEffect, useState } from 'react'
-import { View, } from 'react-native';
+import { ScrollView, View, } from 'react-native';
 import ServiceExpense from '../../../../Components/ServiceExpense';
 import { connect } from 'react-redux';
 import { CustomHeader } from '../../../../Navigation/CustomHeader';
-import {userExpenseList} from '../../../../config/firebase';
+import { userExpenseList } from '../../../../config/firebase';
+import CustomButton from '../../../../Components/CustomButton';
+import { useNavigation, useRoute } from '@react-navigation/core';
+
 
 const index = (props) => {
 
-      const [modalVisible,setModalVisible]= useState(false);
-      const [slipData,setSlipData]= useState('');
-      const [expenseList, setExpenseList]= useState();
-      
-  const getExpenseData=async ()=>{
+  const [modalVisible, setModalVisible] = useState(false);
+  const [slipData, setSlipData] = useState('');
+  const [expenseList, setExpenseList] = useState();
+  const { navigate } = useNavigation();
     
-  const data= await userExpenseList();
-  console.log('data',data);
-  setExpenseList(data);
-}
+  const getExpenseData = async () => {
 
+    const data = await userExpenseList();
+    console.log('data', data);
+    setExpenseList(data);
+  }
 
-React.useEffect(()=>{
+  React.useEffect(() => {
     getExpenseData();
-},[]);
+  }, []);
 
-//  React.useEffect(()=>{
-// },[expenseList]);
+  return (
+    <View style={{ backgroundColor: 'white', minHeight: '100%' }}>
 
- 
-    return (
-<View>    
-  
-<CustomHeader isHome={true} title='Expenses' />
-  
-   <ServiceExpense 
-   modalVisible={modalVisible} 
-   setModalVisible={setModalVisible} 
-   data={expenseList}
-   slipData={slipData}
-   setSlipData={setSlipData}
-   
-   />
-     </View>
-    )
+      <CustomHeader isHome={true} title='Expenses' />
+      <ScrollView>
+        <ServiceExpense
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          data={expenseList}
+          slipData={slipData}
+          setSlipData={setSlipData}
 
-    
+        />
+        {expenseList ?
+          expenseList.length > 0 ? (
+            <CustomButton style={{ width: '90%', alignSelf: 'center', marginBottom: '80%', marginTop: 40 }}
+              onPress={() => navigate('graph', { expenseList })} primary title='Show Results in Graph' />
+          ) : null : null
+        }
+
+      </ScrollView>
+    </View>
+  )
 }
 function mapStateToProps(user) {
   return {
-    userData:user
-    
+    userData: user
+
   }
 }
 export default connect(mapStateToProps)(index);

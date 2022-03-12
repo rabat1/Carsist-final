@@ -6,7 +6,7 @@ import StarRating from 'react-native-star-rating';
 import Colors from '../../Utils/Colors';
 import styles from './styles'
 
-const index = ({disable,mechId}) => {
+const index = ({disable,mechanic_id}) => {
     const [rating, setRating] = useState(0);
 
 
@@ -31,7 +31,7 @@ const index = ({disable,mechId}) => {
     }
   
     React.useEffect(()=>{
-       {disable?GetRatings(mechId):null}
+       {disable?GetRatings(mechanic_id):null}
     },[])
 
     return (

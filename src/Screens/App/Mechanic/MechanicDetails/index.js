@@ -1,11 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, ScrollView } from 'react-native'
 import CustomButton from '../../../../Components/CustomButton';
 import { CustomHeader } from '../../../../Navigation/CustomHeader'
 import { connect } from 'react-redux';
-import firestore from '@react-native-firebase/firestore';
-import messaging from '@react-native-firebase/messaging';
-import auth from '@react-native-firebase/auth';
 import Colors from '../../../../Utils/Colors';
 import Icon from '../../../../Utils/Icon';
 import Ratings from '../../../../Components/Ratings'
@@ -13,93 +10,26 @@ import MechanicDetail from '../../../../Components/MechanicDetail'
 import styles from './styles';
 import MechanicServices from '../../../../Components/MechanicServices'
 import { getMechanic } from '../../../../config/firebase';
+import { useRoute } from '@react-navigation/native';
 //import * as admin from 'firebase-admin'
 //https://rnfirebase.io/messaging/server-integration
 //https://instamobile.io/react-native-tutorials/push-notifications-react-native-firebase/
 
 const index = (props) => {
 
-  // Node.js
 
-  // ownerId - who owns the picture someone liked
-  // userId - id of the user who liked the picture
-  // picture - metadata about the picture
+  const [addressUnique,setAddressU]= useState('');
 
+    const { params: { mechanicId } = {} } = useRoute();
+    
   async function onMechanicSelected() {
+    
     // Get the owners details
     //const mechanic = admin.firestore().collection('users').doc(mechanicId).get();
     const userId = props.userData.userReducer.user.id
-    console.log(userId)
-    //console.log('data',data);
-
-    // Get the users details
-    const user = await firestore().collection('users').doc(userId).get();
-    const token = user._data.token;
-    messaging()
-      .getToken()
-      .then(token => {
-        console.log(token)
-        // saveTokenToDatabase(token);
-      });
-
-    //    const registrationToken = 'YOUR_REGISTRATION_TOKEN';
-
-    const message = {
-      token,
-      data: {
-        score: '850',
-        time: '2:45'
-      },
-
-    };
-    messaging().sendMessage(message).then((res) => { console.log('Haha') }).catch((err) => { console.log('err', err) })
-
-
-
-
-    //   messaging().sendToDevice(
-    //     token, // ['token_1', 'token_2', ...]
-    //     {
-    //         // notification: {
-    //         //             title: "Welcome",
-    //         //             body: "thank for installed our app",
-    //         //           }
-    //       data: {
-    //         // notification: {
-    //         //     title: "Welcome",
-    //         //     body: "thank for installed our app",
-    //         //   },
-    //         //     data hata kar notification rakho bs 
-    //        title: 'ha',
-    //        body: 'hy',
-    //         //picture: 'hu',
-    //       },
-    //     },
-    //     {
-    //       //Required for background/quit data-only messages on iOS
-    //       contentAvailable: true,
-    //       //Required for background/quit data-only messages on Android
-    //      priority: 'high',
-    //     },
-    //   )
-    //   .then(function(response) {
-    //     console.log("Notification sent successfully:", response);
-    //   })
-    //   .catch(function(error) {
-    //     console.log("Notification sent failed:", error);
-    //   });  
-
+    
 
   }
-
-  //   const [items, setItems] = useState([
-  //     { label: 'Warning Light Shows', value: 'warningLight' },
-  //     { label: 'Engine is Sputtering', value: 'engineIssue' },
-  //     { label: 'Steering Wheel is Shaking', value: 'shakingWheel' },
-
-  // ]);
-
-
 
 
   const [services, setServices] = useState('');
@@ -109,10 +39,9 @@ const index = (props) => {
   const [shopName, setShopName] = useState('')
   const [mechId, setMechId] = useState('')
 
-  const MechData = async (mechanic_id) => {
+  const MechData = async () => {
     //here give that id which user seleceted mechanic
-    const data = await getMechanic('QT5iHdUIUAMFNQ6TuQwFthWAIgC3')
-
+    const data = await getMechanic(mechanicId);
     setAddress(data.address)
     setName(data.name)
     setContact(data.contact)
@@ -139,7 +68,7 @@ const index = (props) => {
         </View>
 
 
-        <Ratings disable={true} mechId='QT5iHdUIUAMFNQ6TuQwFthWAIgC3' />
+         <Ratings disable={true} mechanic_id={mechanicId} />
 
         <MechanicServices services={services} />
         {/* give mechanic_id to services component */}
