@@ -200,9 +200,8 @@ export default function Login({ navigation })
                   fontWeight: "medium",
                   fontSize: "sm",
                 }}
-                href="#"
-                onPress={() => setShowModal(true)}
-              >
+              onPress={() => setShowModal(true)}
+             >
                 Sign Up
               </Link>
               <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
