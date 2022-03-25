@@ -62,7 +62,7 @@ const index = () => {
                 })) : (<View style={{ alignSelf: 'center', marginTop: 20 }}><Text>Loading...</Text><ActivityIndicator size={55} /></View>)
                 }
                 <View style={{ marginTop: 30 }}>
-                    <Text style={{}}>Recommendation :</Text>
+                    <Text style={{fontSize:18,fontFamily:'Sofia-Regular',color:Colors.primaryDark}}>Recommendation :</Text>
 
 
                 </View>

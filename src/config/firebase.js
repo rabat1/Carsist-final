@@ -181,7 +181,6 @@ async function editRecFuelTracking(updatedData, uid) {
     .get()
     .then(function (querySnapshot) {
       querySnapshot.forEach(function (doc) {
-        //  console.log(doc.id, " => ", doc.data());
         doc.ref.set({ form })
       });
     })

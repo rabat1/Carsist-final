@@ -44,10 +44,10 @@ const index = (props) => {
                     style={{ backgroundColor: Colors.white }}
                 >
 
-                    {props.data ? props.data.map((item) => (
+                    {props.data ? props.data.map((item,index) => (
 
                         <>
-                         <List.Accordion key={item.id}
+                         <List.Accordion key={index}
                                 theme={{ colors: { primary: Colors.white } }}
                                 style={{ backgroundColor: Colors.primary, paddingVertical: 0, marginTop: 8 }}
                                 title={item.date}

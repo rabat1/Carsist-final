@@ -63,6 +63,7 @@ const index = ({
                                     </View>
 
                                 </TouchableOpacity>
+                                
                                 <View style={styles.itemSeperator}></View>
                             </>
                         );
