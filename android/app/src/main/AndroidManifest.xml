@@ -5,6 +5,7 @@
 <uses-permission android:name="android.permission.CAMERA" />
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 <uses-permission android:name="android.permission.MANAGE_DOCUMENTS"/>
     <application
       android:name=".MainApplication"
@@ -25,5 +26,11 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+       <meta-data
+     android:name="com.google.android.geo.API_KEY"
+     android:value="AIzaSyClOiMowaLaFJ9Wp7mK2CaVKr8-VoMLakM"/>
+
+   <!-- You will also only need to add this uses-library tag -->
+   <uses-library android:name="org.apache.http.legacy" android:required="false"/>
     </application>
 </manifest>

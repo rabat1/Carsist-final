@@ -284,7 +284,7 @@ async function uploadImage(folder, response) {
 
 //'shop images/'
 async function registerMechanic(params) {
-  const { name, email, contact, password, shopName, address, services, cnic, slipImage, shopImage } = params;
+  const { name, email, contact, password, shopName, address, services, cnic, slipImage, shopImage,latitude,longitude } = params;
   const { user } = await auth().createUserWithEmailAndPassword(email, password);
 
   user.sendEmailVerification();
@@ -295,7 +295,7 @@ async function registerMechanic(params) {
   let mechanic=true;
 
   await firestore().collection('mechanic').doc(uid).set({
-    name, email, contact, status: 'pending', shopName, address, services, cnic, shopUrl, slipUrl,mechanic
+    name, email, contact, status: 'pending', shopName, address, services, cnic, shopUrl, slipUrl,mechanic,latitude,longitude
   });
   return uid;
 }
@@ -325,11 +325,25 @@ async function updateMechanicProfile(params)
   })
  
 }
+
+async function addride(params)
+{
+  
+  const {mechanicId,id,pickup,name,phoneNo,issue} = params;
+  const docRef = await firestore()
+  .collection('rides')
+  .add({
+    mechanicId,userId:id,pickup,username:name,userphone:phoneNo,issue,status:'pending'
+  });
+// console.log(' i am docref',docRef);
+
+  return docRef["_documentPath"]['_parts'][1];
+}
 export {
   registerUser, loginUser, getUser, updateStatus, registerMechanic, getMechanic, delRecFuelTracking, userExpenseList,
   addRecFuelTracking, userFuelList, editRecFuelTracking, setMechanicRatings, getMechanicRatings
 ,generateUserToken,updateUserProfile,updateMechanicProfile
-,uploadDocument,addUserDocument,getUserDocuments,getMechanicList,
+,uploadDocument,addUserDocument,getUserDocuments,getMechanicList,addride
 }
 
 

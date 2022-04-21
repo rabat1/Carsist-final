@@ -8,19 +8,74 @@ import Colors from '../../../../Utils/Colors'
 import Icon from '../../../../Utils/Icon'
 import styles from './styles'
 
-const index = () => {
+const index = ({route}) => {
+    // console.log(' i am params' , route.params);
+    const { pickup,form,user} = route.params;
     const { navigate } = useNavigation();
     const [mechList, setMechList] = useState({});
 
-    const onPress = (mechanicId) => {
+    function calcCrow(lat1, lon1, lat2, lon2) {
+        var R = 6371; // km
+        var dLat = toRad(lat2 - lat1);
+        var dLon = toRad(lon2 - lon1);
+        var lat1 = toRad(lat1);
+        var lat2 = toRad(lat2);
     
+        var a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.sin(dLon / 2) *
+            Math.sin(dLon / 2) *
+            Math.cos(lat1) *
+            Math.cos(lat2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var d = R * c;
+        return d;
+      }
+    
+      // Converts numeric degrees to radians
+      function toRad(Value) {
+        return (Value * Math.PI) / 180;
+      }
+
+    const onPress = (element) => {
+        let mechanicId=element.id;
         //you've to send the id which user selected with navigate
-        navigate('mechanicDetails',{mechanicId})
+        // console.log('i ma mechid',mechanicId);
+        navigate('mechanicDetails',{mechanicId,pickup,form,element});
     }
     const getMechanics = async () => {
-        const data = await getMechanicList();
-        setMechList(data);
-        const output = Object.assign({}, ...data)
+        const mechanic = await getMechanicList();
+        
+        // console.log(data);
+        const distance = [];
+        const rides = [];
+        // console.log(drivers);
+        for (let i = 0; i < mechanic.length; i++) {
+          const {latitude,longitude} = mechanic[i];
+        //   console.log(latitude,
+        //     longitude,
+        //     pickup.latitude,
+        //     pickup.longitude)
+    
+          const result = calcCrow(
+            latitude,
+            longitude,
+            pickup.latitude,
+            pickup.longitude
+          ).toFixed(1);
+          distance.push(result);
+          rides.push({distance:result,...mechanic[i]});
+        }
+        console.log('no of distances calculated');
+        console.log(distance);
+        const min = Math.min(...distance);
+        console.log('minimum distance');
+        console.log(min);
+        let rider = rides.find(item => item.distance == min);
+        console.log("finally nearby mechanic is " , rider);
+        setMechList([rider]);
+    
+        // const output = Object.assign({}, ...data)
      
     }
     useEffect(() => {
@@ -35,12 +90,12 @@ const index = () => {
         <View style={{ backgroundColor: 'white', minHeight: '100%' }}>
             <CustomHeader title='Select Mechanic' />
             <View style={styles.container}>
-                <Text style={styles.title}>Related Mechanics</Text>
+                <Text style={styles.title}>Near By Mechanics</Text>
 
                 {mechList.length > 0 ? (mechList.map((element) => {
                     return (
                         <>
-                            <TouchableOpacity onPress={()=>onPress(element.id)} key={element.id} style={styles.listContainer}>
+                            <TouchableOpacity onPress={()=>onPress(element)} key={element.id} style={styles.listContainer}>
                                 <View style={{ flex: 1, justifyContent: 'center' }}>
                                     <Image width={45} height={45} source={{ uri: element.shopUrl }} style={styles.img} />
                                 </View>
@@ -59,7 +114,7 @@ const index = () => {
 
                         </>
                     );
-                })) : (<View style={{ alignSelf: 'center', marginTop: 20 }}><Text>Loading...</Text><ActivityIndicator size={55} /></View>)
+                })) : (<View style={{ alignSelf: 'center', marginTop: 20 }}><Text>Finding Near By Mechanic...</Text><ActivityIndicator size={55} /></View>)
                 }
                 <View style={{ marginTop: 30 }}>
                     <Text style={{}}>Recommendation :</Text>

@@ -1,81 +1,95 @@
-import React,{useState} from 'react'
-import { View, Text,TouchableOpacity } from 'react-native'
+import React,{useEffect, useState} from 'react'
+import { View, Text,TouchableOpacity,StyleSheet } from 'react-native'
 import SearchTab from '../../../../Components/SearchTab'
-import MapComponent from '../../../../Components/MapComponent'
+// import MapComponent from '../../../../Components/MapComponent'
 import CustomButton from '../../../../Components/CustomButton'
 import { useNavigation, useFocusEffect } from '@react-navigation/core';
-import Icon from '../../../../Utils/Icon'
+// import Icon from '../../../../Utils/Icon'
 import { CustomHeader } from '../../../../Navigation/CustomHeader';
-import { getUser,getMechanic } from '../../../../config/firebase'
-import {useSelector} from 'react-redux';
-import axios from "axios";
+import { getUser,getMechanic,getMechanicList} from '../../../../config/firebase'
+
+import MapView, { PROVIDER_GOOGLE ,Marker} from 'react-native-maps';
+
+
+
 
 const index = () => {
-    const [shop, setShop] = useState("San Francisco");
-    const [token,setToken] = useState();
-    const user = useSelector(state => state.userReducer.user);
-    async function fetch() {
-        if(user.mechanic == false)
-        {
-            const data = await getUser(user.id);
-            setToken(data.token);
-        }
-        else if(user.mechanic == true)
-        {
-            const data = await getMechanic(user.id);
-            setToken(data.token);
-        }
+
+    const [markers,setMarkers]=useState();
+    const [region,setRegion] = useState({
+      latitude: 24.908040851439186, 
+      longitude:  67.11852547690728,
+      latitudeDelta: 0.033,
+      longitudeDelta: 0.033,
+   });
+    // const user = useSelector(state => state.userReducer.user);
+    
+    useEffect( async ()=>{
+       var data = await getMechanicList();
+      setMarkers(data);
      
-    //   console.log(data.token);
-      
-    }
-    fetch();
+
+
+    },[]);
+     
+   
     const {navigate} = useNavigation();
     
     const onPress = () => {
         navigate('issue');
+       
+      
     }
-    const sendNotification= ()=>{
-          
-           axios.post('http://a0a2-39-50-253-234.ngrok.io/send-notification',{
-            token:token
-        
-    }).then((response) => response.data).catch((e)=>console.log(e));
-    
-       }
-
-    // React.useEffect(()=>{
-    //     setOptions({headerLeft:()=><TouchableOpacity onPress={()=>{
-    //         toggleDrawer();
-    //     }}><Icon type='material' name='menu' size={25} style={{padding:10}} />
-    //     </TouchableOpacity>})
-    // },[]);
-
+    const onRegionChange = (region)=>{
+           setRegion(region);
+    }
+   
 
     return (
         <View>
             <CustomHeader isHome={true} title='Home' />
 
-            <View style={{backgroundColor:'white', padding:5,}}>
-                <SearchTab shopHandler={setShop} />
-            </View>
+          
+            <MapView
+            style={styles.map}
+            provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+            initialRegion={{
+              latitude: 24.908040851439186, 
+              longitude:  67.11852547690728,
+              latitudeDelta: 0.033,
+              longitudeDelta: 0.033,
+           }}
+           onRegionChange={onRegionChange}
+         >
+         {markers && markers.map((marker, index) => (
+            <Marker
+              key={index}
+              coordinate={{latitude : marker['latitude'], longitude:marker['longitude']}}
+              title={marker.shopName}
+              description={marker.address}
+              image={require('../../../../../assets/Images/car_mechanic_icon2.png')}
+            />
+          ))}
+         
+          </MapView>
             
-             <MapComponent />
              <CustomButton
               title='Are You facing any trouble?'
               primary
               onPress={onPress}
-              style={{width:'70%', alignSelf:'center', marginTop:30}}
-              />
-         
-              <CustomButton
-              title='Testing Notification'
-              primary
-              onPress={sendNotification}
               style={{width:'70%', alignSelf:'center', marginTop:10}}
               />
+         
+
         </View>
     )
 }
+const styles = StyleSheet.create({
+  
+    map: {
+      width:"100%",
+      height:"75%"
+    },
+   });
 
 export default index

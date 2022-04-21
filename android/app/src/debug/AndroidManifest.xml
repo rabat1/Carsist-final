@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:usesCleartextTraffic="true"
@@ -13,5 +15,11 @@
          android:requestLegacyExternalStorage="true" 
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+          <meta-data
+     android:name="com.google.android.geo.API_KEY"
+     android:value="AIzaSyClOiMowaLaFJ9Wp7mK2CaVKr8-VoMLakM"/>
+
+   <!-- You will also only need to add this uses-library tag -->
+   <uses-library android:name="org.apache.http.legacy" android:required="false"/>
     </application>
 </manifest>

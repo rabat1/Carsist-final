@@ -9,24 +9,50 @@ import Ratings from '../../../../Components/Ratings'
 import MechanicDetail from '../../../../Components/MechanicDetail'
 import styles from './styles';
 import MechanicServices from '../../../../Components/MechanicServices'
-import { getMechanic } from '../../../../config/firebase';
+import { getMechanic,getUser,addride} from '../../../../config/firebase';
+import { useSelector } from 'react-redux';
 import { useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import axios from "axios";
 //import * as admin from 'firebase-admin'
 //https://rnfirebase.io/messaging/server-integration
 //https://instamobile.io/react-native-tutorials/push-notifications-react-native-firebase/
 
-const index = (props) => {
+const index = ({route}) => {
 
+  const {mechanicId,pickup,form,element} = route.params;
+ 
+  // const [addressUnique,setAddressU]= useState('');
+  // const [token,setToken] = useState();
+ 
+   const user = useSelector(state => state.userReducer.user)
+  // console.log(pickup,form,mechanicId,user,element);
+  const { navigate } = useNavigation();
 
-  const [addressUnique,setAddressU]= useState('');
+  const sendNotification= ()=>{
+          
+    axios.post('https://36c5-39-50-235-147.ngrok.io/send-notification',{
+     token:element.token
+ 
+   }).then((response) => response.data).catch((e)=>console.log(e));
+    
+   }
 
-    const { params: { mechanicId } = {} } = useRoute();
+   
+ 
+
+    // const { params: { mechanicId } = {} } = useRoute();
     
   async function onMechanicSelected() {
+    const {id}=user;
+    const {name,phoneNo,issue} = form;
+   
+    const docid = await addride({mechanicId,id,pickup,name,phoneNo,issue});
+    //sending notification to mechanic;
+      sendNotification();
+    //  console.log(docid);
+    navigate("request",{docid});
     
-    // Get the owners details
-    //const mechanic = admin.firestore().collection('users').doc(mechanicId).get();
-    const userId = props.userData.userReducer.user.id
     
 
   }
@@ -48,7 +74,7 @@ const index = (props) => {
     setShopName(data.shopName)
     setMechId(data.id)
     setServices(data.services)
-    console.log('dataaa', data)
+    // console.log('dataaa', data)
   }
   React.useEffect(() => {
     MechData();

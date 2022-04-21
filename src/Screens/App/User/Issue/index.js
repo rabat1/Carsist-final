@@ -38,8 +38,9 @@ const index = () => {
     };
 
     const onSubmit = async () => {
-        navigate('mechanicSelection')
-        console.log(form);
+        // navigate('mechanicSelection')
+        navigate("pickuplocation",{form});
+       // console.log('hello',form);
     }
 
     return (

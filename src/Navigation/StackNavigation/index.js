@@ -5,11 +5,13 @@ import Reminders from '../../Screens/App/User/Remiders';
 import addReminder from '../../Screens/App/User/AddReminder';
 import Expenses from '../../Screens/App/User/Expenses'
 import Home from '../../Screens/App/User/Home';
-import Issue from '../../Screens/App/User/Issue'
+import Issue from '../../Screens/App/User/Issue';
+import PickupLocation from '../../Screens/App/User/PickupLocation';
 import MechanicSelection from '../../Screens/App/User/MechanicSelection'
 import MechanicDetails from '../../Screens/App/Mechanic/MechanicDetails'
 import UserDocument from '../../Screens/App/User/UserDocument';
 import Document from '../../Screens/App/User/Document';
+import Request from '../../Screens/App/User/Request';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Graph from '../../Screens/App/User/Graph'
 
@@ -39,8 +41,10 @@ export function FuelTrackStack(){
       <ApplicationStack.Navigator initialRouteName='home'>
         <ApplicationStack.Screen name='home' component={Home} options={{headerShown:false}}/>
         <ApplicationStack.Screen name='issue' component={Issue} options={{headerShown:false}}/>
+        <ApplicationStack.Screen name='pickuplocation' component={PickupLocation} options={{headerShown:false}}/>
         <ApplicationStack.Screen name='mechanicSelection' component={MechanicSelection} options={{headerShown:false}}/>
         <ApplicationStack.Screen name='mechanicDetails' component={MechanicDetails} options={{headerShown:false}}/>
+        <ApplicationStack.Screen name='request' component={Request} options={{headerShown:false}}/>
        
       </ApplicationStack.Navigator>
     )
