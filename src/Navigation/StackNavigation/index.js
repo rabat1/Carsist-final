@@ -14,6 +14,8 @@ import Document from '../../Screens/App/User/Document';
 import Request from '../../Screens/App/User/Request';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Graph from '../../Screens/App/User/Graph'
+import ExpenseSlip from '../../Screens/App/Mechanic/ExpenseSlip';
+import Stripee from '../../Screens/App/User/Stripe';
 
 const ApplicationStack= createNativeStackNavigator();
 
@@ -39,6 +41,7 @@ export function FuelTrackStack(){
   export function HomeStack(){
     return(
       <ApplicationStack.Navigator initialRouteName='home'>
+        
         <ApplicationStack.Screen name='home' component={Home} options={{headerShown:false}}/>
         <ApplicationStack.Screen name='issue' component={Issue} options={{headerShown:false}}/>
         <ApplicationStack.Screen name='pickuplocation' component={PickupLocation} options={{headerShown:false}}/>
@@ -46,6 +49,9 @@ export function FuelTrackStack(){
         <ApplicationStack.Screen name='mechanicDetails' component={MechanicDetails} options={{headerShown:false}}/>
         <ApplicationStack.Screen name='request' component={Request} options={{headerShown:false}}/>
        
+        <ApplicationStack.Screen name='stripe' component={Stripee} options={{headerShown:false}}/>
+        <ApplicationStack.Screen name='Slip' component={ExpenseSlip} options={{headerShown:false}}/>
+      
       </ApplicationStack.Navigator>
     )
   }

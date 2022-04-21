@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import { View, Text } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker';
+import Colors from '../../Utils/Colors';
 import styles from './styles';
 
 
@@ -10,9 +11,9 @@ const index = (props) => {
     console.log('mechServ', props.services)
    
     return (
-        <View>
-            <Text>Services</Text>
-            <Text>{props.services}</Text>
+        <View style={{alignItems:'center'}}>
+            <Text style={{color:Colors.primaryDark,fontFamily:'Sofia-Regular',fontSize:20}}>Services :</Text>
+            <Text style={{color:Colors.primaryDark,fontSize:16}}>{props.services}</Text>
              {/* <DropDownPicker
                 listMode="SCROLLVIEW"  
                 open={open}

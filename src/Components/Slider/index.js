@@ -1,12 +1,14 @@
 import { View, Text, FlatList, Dimensions, Image, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import styles from './styles';
-import Colors from '../../Utils/Colors';
+
 
 const index = (props) => {
   
   
   const SCREEN_WIDTH = Dimensions.get('window').width;
+ 
+
   const renderView = ({ item, index }) => {
   
     return (
@@ -27,6 +29,8 @@ const index = (props) => {
       </View>
     )
   }
+
+
 
   return (
     <ScrollView>
