@@ -1,16 +1,14 @@
 import React,{useEffect, useState} from 'react'
+import {useSelector} from 'react-redux';
+import MapView, { PROVIDER_GOOGLE ,Marker} from 'react-native-maps';
 import { View, Text,TouchableOpacity,StyleSheet } from 'react-native'
 import SearchTab from '../../../../Components/SearchTab'
 // import MapComponent from '../../../../Components/MapComponent'
 import CustomButton from '../../../../Components/CustomButton'
 import { useNavigation, useFocusEffect } from '@react-navigation/core';
-// import Icon from '../../../../Utils/Icon'
-import { CustomHeader } from '../../../../Navigation/CustomHeader';
+// // import Icon from '../../../../Utils/Icon'
+// import { CustomHeader } from '../../../../Navigation/CustomHeader';
 import { getUser,getMechanic,getMechanicList} from '../../../../config/firebase'
-
-import MapView, { PROVIDER_GOOGLE ,Marker} from 'react-native-maps';
-
-
 
 
 const index = () => {
@@ -22,7 +20,8 @@ const index = () => {
       latitudeDelta: 0.033,
       longitudeDelta: 0.033,
    });
-    // const user = useSelector(state => state.userReducer.user);
+  //  const user = useSelector(state => state.userReducer.user);
+  //  console.log(user);
     
     useEffect( async ()=>{
        var data = await getMechanicList();
@@ -46,10 +45,7 @@ const index = () => {
    
 
     return (
-        <View>
-            <CustomHeader isHome={true} title='Home' />
-
-          
+        <View style={styles.home}>
             <MapView
             style={styles.map}
             provider={PROVIDER_GOOGLE} // remove if not using Google Maps
@@ -85,11 +81,15 @@ const index = () => {
     )
 }
 const styles = StyleSheet.create({
-  
+  home:{
+    // marginTop:"10%",
+  },
     map: {
       width:"100%",
-      height:"75%"
+      height:"80%"
     },
    });
 
-export default index
+export default index;
+
+//<CustomHeader isHome={true} title='Home' />

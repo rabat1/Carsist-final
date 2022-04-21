@@ -4,7 +4,7 @@ import FuelTracker from '../../Screens/App/User/FuelTracker';
 import Reminders from '../../Screens/App/User/Remiders';
 import addReminder from '../../Screens/App/User/AddReminder';
 import Expenses from '../../Screens/App/User/Expenses'
-import Home from '../../Screens/App/User/Home';
+import Home from '../../Screens/App/Home';
 import Issue from '../../Screens/App/User/Issue';
 import PickupLocation from '../../Screens/App/User/PickupLocation';
 import MechanicSelection from '../../Screens/App/User/MechanicSelection'
