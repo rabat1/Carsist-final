@@ -6,7 +6,7 @@ import CustomButton from "../../../../Components/CustomButton";
 import { CustomHeader } from "../../../../Navigation/CustomHeader";
 
 
-const index = () => {
+const index = ({navigation}) => {
     return (
 
         <StripeProvider publishableKey="pk_test_51Kcpi6H2WhhBPXdA0rj2PAE8uXo323Zmcud4uJ9F6z2rK2jkWECTQ4j6900FX8jfypDZ654nf6N61iqo3bfq339s00VAEJRhW7" merchantIdentifier="merchant.identifier" >
@@ -21,28 +21,28 @@ const index = () => {
 };
 
 
-const StripeTest = () => {
+const StripeTest = ({navigation}) => {
     const { confirmPayment } = useStripe();
     const [key, setKey] = useState('');
     const [loading,setLoading]=useState(false);
     useEffect(() => {
-        try {
-            //10.0.2.2
-            fetch('http://aca0-119-152-101-0.ngrok.io/create-payment-intent', {
-                method: "POST",
-            }
-            )
-                .then(res => res.json())
-                .then(res => {
-                    //   const clientSecret = (res.client_secret).toString;
+        // try {
+        //     //10.0.2.2
+        //     fetch('http://aca0-119-152-101-0.ngrok.io/create-payment-intent', {
+        //         method: "POST",
+        //     }
+        //     )
+        //         .then(res => res.json())
+        //         .then(res => {
+        //             //   const clientSecret = (res.client_secret).toString;
 
-                    //  const intent = res as {clientSecret:string};
-                    setKey(res.clientSecret);
-                })
-        }
-        catch (error) {
-            console.log(error);
-        }
+        //             //  const intent = res as {clientSecret:string};
+        //             setKey(res.clientSecret);
+        //         })
+        // }
+        // catch (error) {
+        //     console.log(error);
+        // }
     }, []);
     const handlePayment = async () => {
         setLoading(true);
@@ -58,6 +58,7 @@ const StripeTest = () => {
         }
         else {
             Alert.alert("You have Successfully paid your Bill, Thanks :)");
+            navigation.navigate("home");
             setLoading(false);
         }
     }

@@ -16,6 +16,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Graph from '../../Screens/App/User/Graph'
 import ExpenseSlip from '../../Screens/App/Mechanic/ExpenseSlip';
 import Stripee from '../../Screens/App/User/Stripe';
+import PaymentConfirmation from '../../Screens/App/Mechanic/PaymentConfirmation';
 
 const ApplicationStack= createNativeStackNavigator();
 
@@ -48,7 +49,7 @@ export function FuelTrackStack(){
         <ApplicationStack.Screen name='mechanicSelection' component={MechanicSelection} options={{headerShown:false}}/>
         <ApplicationStack.Screen name='mechanicDetails' component={MechanicDetails} options={{headerShown:false}}/>
         <ApplicationStack.Screen name='request' component={Request} options={{headerShown:false}}/>
-       
+        <ApplicationStack.Screen name='confirmation' component={PaymentConfirmation} options={{headerShown:false}}/>
         <ApplicationStack.Screen name='stripe' component={Stripee} options={{headerShown:false}}/>
         <ApplicationStack.Screen name='Slip' component={ExpenseSlip} options={{headerShown:false}}/>
       

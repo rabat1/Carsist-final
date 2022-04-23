@@ -46,12 +46,13 @@ const index = ({route}) => {
   async function onMechanicSelected() {
     const {id}=user;
     const {name,phoneNo,issue} = form;
+    
    
     const docid = await addride({mechanicId,id,pickup,name,phoneNo,issue});
     //sending notification to mechanic;
       sendNotification();
     //  console.log(docid);
-    navigate("request",{docid});
+    navigate("request",{docid,element});
     
   
     // navigate('Slip');
