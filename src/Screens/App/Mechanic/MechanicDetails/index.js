@@ -31,7 +31,7 @@ const index = ({route}) => {
 
   const sendNotification= ()=>{
           
-    axios.post('https://36c5-39-50-235-147.ngrok.io/send-notification',{
+    axios.post('https://1204-39-50-200-193.ngrok.io/send-notification',{
      token:element.token
  
    }).then((response) => response.data).catch((e)=>console.log(e));

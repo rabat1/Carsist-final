@@ -100,7 +100,7 @@ export default function Request({ navigation, route }) {
               
 
              <Text fontWeight="400" color="red">
-              You have not done payment yet , pay it to mechanic or do online payment:
+              You have not done payment yet!! Please Pay it directly to mechanic or do online payment:
              </Text>
                <Button size="md" bg="green.700" onPress={() => navigation.navigate("stripe")}>Online Payment</Button>
      
