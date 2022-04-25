@@ -12,7 +12,7 @@ const index = ({disable,mechanic_id}) => {
 
     const GiveRating = async (rating,mechanic_id) => {
         console.log(rating)
-       // setRating(rating)
+        setRating(rating)
              await setMechanicRatings(mechanic_id,rating);
            }
   
@@ -36,7 +36,7 @@ const index = ({disable,mechanic_id}) => {
 
     return (
         <View style={styles.ratingContainer}>
-            <Text style={styles.ratingsText}>Ratings:</Text>
+            <Text style={styles.ratingsText}>Rating:</Text>
             <StarRating
                 disabled={disable}
                 containerStyle={styles.containerStyle}
@@ -44,7 +44,7 @@ const index = ({disable,mechanic_id}) => {
                 rating={rating}
                 starSize={25}
                 fullStarColor={Colors.primaryDark}
-                selectedStar={(rating) => GiveRating(rating,'mechanic_id')}
+                selectedStar={(rating) => GiveRating(rating,mechanic_id)}
             />
 
 

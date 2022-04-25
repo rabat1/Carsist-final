@@ -6,7 +6,7 @@ export default StyleSheet.create({
     mechanicName:{
         textAlign:'center', 
         marginTop:'5%',
-        fontSize:20,
+        fontSize:24,
         color:Colors.primaryDark,
         fontFamily:'Sofia-Regular'
     },

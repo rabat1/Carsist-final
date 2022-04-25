@@ -13,11 +13,14 @@ import {
 } from "native-base";
 import { View,StyleSheet, Dimensions,Alert} from "react-native";
 import firestore from '@react-native-firebase/firestore';
+import { useNavigation } from "@react-navigation/native";
+import Colors from "../../../../Utils/Colors";
 
 export default function Request({ navigation, route }) {
   const [status, setStatus] = useState();
   const [details,setDetails] = useState();
   const { docid,element} = route.params;
+  const {navigate}= useNavigation();
   
   useEffect(() => {
 
@@ -29,7 +32,7 @@ export default function Request({ navigation, route }) {
         // console.log('data: ', documentSnapshot.data());
         setDetails(documentSnapshot.data());
         setStatus(documentSnapshot.data()["status"]);
-
+      
       });
 
     // Stop listening for updates when no longer required
@@ -41,8 +44,8 @@ export default function Request({ navigation, route }) {
       <Center flex={1} px="3">
         {status === "pending" && (
           <HStack space={2} alignItems="center">
-            <Spinner accessibilityLabel="Loading posts" size="lg" color="black"/>
-            <Heading color="black" fontSize="md">
+            <Spinner accessibilityLabel="Loading posts" size="lg" color={Colors.primaryDark}/>
+            <Heading color={Colors.primaryDark} fontSize="md">
               Confirming Your Mechanic
             </Heading>
           </HStack>
@@ -50,8 +53,8 @@ export default function Request({ navigation, route }) {
 
         {status === "accepted" && (
           <HStack space={2} alignItems="center">
-          <Spinner accessibilityLabel="Loading posts" size="lg" color="black"/>
-          <Heading color="black" fontSize="sm">
+          <Spinner accessibilityLabel="Loading posts" size="lg" color={Colors.primaryDark}/>
+          <Heading color={Colors.primaryDark} fontSize="sm">
             Mechanic is on it's way 
             and ready to serve you!
           </Heading>
@@ -71,12 +74,12 @@ export default function Request({ navigation, route }) {
           }}>
           
             <Stack p="4" space={3}>
-              <Stack space={2}>
-                <Heading size="md" ml="-1">
+              <Stack space={2} alignItems='center'>
+                <Heading size="md" ml="-1" color={Colors.primary} >
                  Service Done 
                 </Heading>
                 <Text fontSize="md" _light={{
-                color: "violet.500"
+                color: Colors.primaryDark
               }} _dark={{
                 color: "violet.400"
               }} fontWeight="500" ml="-0.5" mt="-1">
@@ -108,7 +111,10 @@ export default function Request({ navigation, route }) {
              </VStack>}
              {details.payment == "done" && 
              
-             <Button size="md" bg="green.700" onPress={() => {Alert.alert("Service Completed"); navigation.navigate("home")}}>Ok</Button>}
+             <Button size="md" bg={Colors.primaryDark} 
+             onPress={() => {Alert.alert("Service Completed"); navigate("giveRating",{details})}}> 
+             {/* can send element to print mechanic Name */}
+               Ok</Button>}
             
            
             </Stack>

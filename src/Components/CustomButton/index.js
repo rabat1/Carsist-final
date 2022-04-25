@@ -36,7 +36,7 @@ const CustomButton = ({
                 <Text style={{
                     color: disabled?'black':Colors.white,
                      paddingLeft: loading?5:0,
-                     fontFamily:'Charm-Bold',fontSize:16}}>
+                     fontFamily:'Charm-Bold',fontSize:17}}>
                     {loading ? 'Please wait': title}
                 </Text>
                 }

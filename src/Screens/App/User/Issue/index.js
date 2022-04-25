@@ -40,7 +40,6 @@ const index = () => {
     const onSubmit = async () => {
         // navigate('mechanicSelection')
         navigate("pickuplocation",{form});
-       // console.log('hello',form);
     }
 
     return (

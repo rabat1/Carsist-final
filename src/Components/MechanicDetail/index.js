@@ -12,8 +12,8 @@ const index = ({label,value,iconName}) => {
     return (
       <View style={styles.detailsContainer}>
       <Icon name={iconName} size={18} style={{flex:0.4}} color={Colors.primaryDark}/>
-      <Text style={styles.detailsText}>{label}</Text>
-      <Text style={[styles.detailsText,{flex:2.1}]}>{value}</Text>
+      <Text style={[styles.detailsText,{color:'black'}]}>{label}</Text>
+      <Text style={[styles.detailsText,{flex:2.2}]}>{value}</Text>
     </View>
 
     )

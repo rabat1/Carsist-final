@@ -9,7 +9,7 @@ export default StyleSheet.create({
     alignSelf: 'center'
   },
   ratingsText: {
-    fontSize: 18, 
+    fontSize: 22, 
     color: Colors.primaryDark,fontFamily:'Sofia-Regular',
   },
     containerStyle:{ width: '60%', alignSelf: 'center',marginLeft:'5%',

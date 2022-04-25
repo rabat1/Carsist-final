@@ -17,7 +17,7 @@ import Graph from '../../Screens/App/User/Graph'
 import ExpenseSlip from '../../Screens/App/Mechanic/ExpenseSlip';
 import Stripee from '../../Screens/App/User/Stripe';
 import PaymentConfirmation from '../../Screens/App/Mechanic/PaymentConfirmation';
-
+import GiveRatings from '../../Screens/App/User/GiveRating';
 const ApplicationStack= createNativeStackNavigator();
 
 export function FuelTrackStack(){
@@ -52,7 +52,8 @@ export function FuelTrackStack(){
         <ApplicationStack.Screen name='confirmation' component={PaymentConfirmation} options={{headerShown:false}}/>
         <ApplicationStack.Screen name='stripe' component={Stripee} options={{headerShown:false}}/>
         <ApplicationStack.Screen name='Slip' component={ExpenseSlip} options={{headerShown:false}}/>
-      
+        <ApplicationStack.Screen name='giveRating' component={GiveRatings} options={{headerShown:false}}/>
+     
       </ApplicationStack.Navigator>
     )
   }
