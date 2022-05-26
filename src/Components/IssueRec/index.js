@@ -62,7 +62,7 @@ const index = (props) => {
                 value={props.form.name || ""}
                 label='Name*' placeholder="Enter Your Name" />
 
-            <Text style={style.textLabel}>Your Problem</Text>
+            <Text style={style.textLabel}>Your Problem*</Text>
             <DropDownPicker
                 listMode="SCROLLVIEW"  
                 open={props.open}
@@ -94,7 +94,7 @@ const index = (props) => {
                 }}
                 multiline={true}
                 value={props.form.description || ""}
-                label='Description*' placeholder="Enter Description" />
+                label='Description' placeholder="Enter Description" />
             <CustomButton
                 //  loading={loading}
                 onPress={props.onSubmit}
