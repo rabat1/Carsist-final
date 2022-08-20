@@ -108,7 +108,8 @@ export default function Request({ navigation, route }) {
              </VStack>}
              {details.payment == "done" && 
              
-             <Button size="md" bg="green.700" onPress={() => {Alert.alert("Service Completed"); navigation.navigate("home")}}>Ok</Button>}
+             <Button size="md" bg="green.700" onPress={() => {Alert.alert("Service Completed");
+              navigation.navigate("home")}}>Ok</Button>}
             
            
             </Stack>
