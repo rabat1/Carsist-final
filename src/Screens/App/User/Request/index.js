@@ -13,11 +13,16 @@ import {
 } from "native-base";
 import { View,StyleSheet, Dimensions,Alert} from "react-native";
 import firestore from '@react-native-firebase/firestore';
+import { useNavigation } from "@react-navigation/native";
+import Colors from "../../../../Utils/Colors";
+import { SafeAreaView } from "react-native-safe-area-context";
+import CustomButton from "../../../../Components/CustomButton";
 
 export default function Request({ navigation, route }) {
   const [status, setStatus] = useState();
   const [details,setDetails] = useState();
   const { docid,element} = route.params;
+  const {navigate}= useNavigation();
   
   useEffect(() => {
 
@@ -29,7 +34,7 @@ export default function Request({ navigation, route }) {
         // console.log('data: ', documentSnapshot.data());
         setDetails(documentSnapshot.data());
         setStatus(documentSnapshot.data()["status"]);
-
+      
       });
 
     // Stop listening for updates when no longer required
@@ -38,22 +43,22 @@ export default function Request({ navigation, route }) {
 
   return (
     <NativeBaseProvider>
-      <Center flex={1} px="3">
+      <SafeAreaView style={{minHeight:'100%',backgroundColor:'white'}}>
+      <Center flex={1} px="3" style={{marginHorizontal:20}}>
         {status === "pending" && (
-          <HStack space={2} alignItems="center">
-            <Spinner accessibilityLabel="Loading posts" size="lg" color="black"/>
-            <Heading color="black" fontSize="md">
-              Confirming Your Mechanic
+          <HStack space={5} alignItems="center">
+            <Spinner accessibilityLabel="Loading posts" size="lg" color={Colors.primaryDark}/>
+            <Heading color={Colors.primaryDark} fontSize="md">
+             Confirming Your Mechanic...
             </Heading>
           </HStack>
         )}
 
         {status === "accepted" && (
-          <HStack space={2} alignItems="center">
-          <Spinner accessibilityLabel="Loading posts" size="lg" color="black"/>
-          <Heading color="black" fontSize="sm">
-            Mechanic is on it's way 
-            and ready to serve you!
+          <HStack space={5} alignItems="center">
+          <Spinner accessibilityLabel="Loading posts" size="lg" color={Colors.primaryDark}/>
+          <Heading color={Colors.primaryDark} fontSize="md" style={{marginRight:'5%'}}>
+            Mechanic is on it's way and ready to serve you !!
           </Heading>
         </HStack>
         )}
@@ -71,12 +76,12 @@ export default function Request({ navigation, route }) {
           }}>
           
             <Stack p="4" space={3}>
-              <Stack space={2}>
-                <Heading size="md" ml="-1">
+              <Stack space={2} alignItems='center'>
+                <Heading size="md" ml="-1" color={Colors.primary} >
                  Service Done 
                 </Heading>
                 <Text fontSize="md" _light={{
-                color: "violet.500"
+                color: Colors.primaryDark
               }} _dark={{
                 color: "violet.400"
               }} fontWeight="500" ml="-0.5" mt="-1">
@@ -85,31 +90,35 @@ export default function Request({ navigation, route }) {
               </Stack>
              
               <Text fontWeight="400">
-              Cost : {details.cost}
+              Cost :    {details.cost}
               </Text>
               <Text fontWeight="400">
-              Services : {details.service_name}
+              Services :   {details.service_name}
               </Text>
               <Text fontWeight="400">
-              Odometer: {details.odometer}
+              Odometer :  {details.odometer}
               </Text>
               <Text fontWeight="400">
-              Date: {details.date}
+              Date:   {details.date}
               </Text>
-             {details.payment == "not done" &&<VStack alignItems="center" space={4} justifyContent="space-between">
+            {details.payment == "not done" &&
+             <VStack alignItems="center" space={4} justifyContent="space-between"> 
               
 
              <Text fontWeight="400" color="red">
               You have not done payment yet!! Please Pay it directly to mechanic or do online payment:
              </Text>
-               <Button size="md" bg="green.700" onPress={() => navigation.navigate("stripe")}>Online Payment</Button>
-     
-             
-             </VStack>}
-             {details.payment == "done" && 
-             
-             <Button size="md" bg="green.700" onPress={() => {Alert.alert("Service Completed");
-              navigation.navigate("home")}}>Ok</Button>}
+    <CustomButton primary title="Online Payment" style={{minWidth:'80%'}} onPress={() => navigation.navigate("stripe")} />
+                
+              </VStack> 
+            }
+           
+             <Button size="md" bg={Colors.primaryDark} 
+             onPress={() => {Alert.alert("Service Completed"); navigate("giveRating",{details})}}>
+             {/* can send element to print mechanic Name */}
+               Ok</Button>
+                
+
             
            
             </Stack>
@@ -117,6 +126,7 @@ export default function Request({ navigation, route }) {
           </Box>
           )}
       </Center>
+      </SafeAreaView>
     </NativeBaseProvider>
   );
  
@@ -132,3 +142,33 @@ const styles = StyleSheet.create({
       justifyContent: "center",
     },
   });
+
+
+//   {
+//     details.payment == "done" && 
+    
+// <<<<<<< HEAD
+//     </VStack>}
+//     {details.payment == "done" && 
+    
+//     <Button size="md" bg="green.700" onPress={() => {Alert.alert("Service Completed");
+//      navigation.navigate("home")}}>Ok</Button>}
+// =======
+//     <Button size="md" bg={Colors.primaryDark} 
+//     onPress={() => {Alert.alert("Service Completed"); navigate("giveRating",{details})}}>
+//     {/* can send element to print mechanic Name */}
+//       Ok</Button>
+//        } 
+// >>>>>>> 111d01b8a947fb42fbd556f55436f7e955ebb38d
+   
+  
+// {
+//   details.payment == "done" && 
+  
+// <<<<<<< HEAD
+//   </VStack>}
+//   {details.payment == "done" && 
+  
+//   <Button size="md" bg="green.700" onPress={() => {Alert.alert("Service Completed");
+//    navigation.navigate("home")}}>Ok</Button>}
+// =======

@@ -3,7 +3,6 @@ import {useSelector} from 'react-redux';
 import MapView, { PROVIDER_GOOGLE ,Marker} from 'react-native-maps';
 import { View, Text,TouchableOpacity,StyleSheet } from 'react-native'
 import SearchTab from '../../../../Components/SearchTab'
-// import MapComponent from '../../../../Components/MapComponent'
 import CustomButton from '../../../../Components/CustomButton'
 import { useNavigation, useFocusEffect } from '@react-navigation/core';
 // // import Icon from '../../../../Utils/Icon'
@@ -70,7 +69,7 @@ const index = () => {
           </MapView>
             
              <CustomButton
-              title='Are You facing any trouble?'
+              title='Are You In trouble?'
               primary
               onPress={onPress}
               style={{width:'70%', alignSelf:'center', marginTop:10}}

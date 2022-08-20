@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from '../../Utils/Icon';
 import Colors from '../../Utils/Colors';
 import { ExpenseStack, FuelTrackStack, HomeStack, ReminderStack, UserDocumentStack } from '../StackNavigation';
+import { useSelector } from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 
 export default function HomeTabs() {
+  const user = useSelector(state => state.userReducer.user);
+  const [statee, setState] = useState(user.mechanic);
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -56,17 +59,18 @@ export default function HomeTabs() {
         },
       })}
     >
+      {
+        statee ?
+          <Tab.Screen name="Home" component={HomeStack}
+            options={{
+              tabBarStyle: {
+                display: 'none'
+              },
+            }}
+          /> :
+          <Tab.Screen name="Home" component={HomeStack} />
+      }
 
-      <Tab.Screen name="Home" component={HomeStack}
-        options={{
-
-          //  headerShown:false,
-          //   tabBarIcon: ({Color}) => (
-          //     <Icon name='home' type='material' color={Color} size={30} />
-          //   ),
-        }}
-      />
-      {/* <Tab.Screen  name="UserHistory" component={UserHistory} /> */}
       <Tab.Screen name="FuelTracker" component={FuelTrackStack} />
       <Tab.Screen name="Remiders" component={ReminderStack} />
       <Tab.Screen name="Expenses" component={ExpenseStack} />

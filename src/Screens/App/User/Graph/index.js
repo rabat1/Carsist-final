@@ -12,9 +12,9 @@ const index = () => {
 
     for (var i = 0; i < expenseList.length; i++) {
         labels.push(expenseList[i]['date']);
-        data1.push(expenseList[i]['cost']);
+        data1.push(parseInt(expenseList[i]['cost']));
     }
-
+    
     const data = {
         labels: labels,
         datasets: [
@@ -52,4 +52,4 @@ const index = () => {
     )
 }
 
-export default index
+export default index;

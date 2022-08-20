@@ -18,6 +18,8 @@ import {
     Pressable,
     AlertDialog
   } from "native-base";
+import { CustomHeader } from "../../../../Navigation/CustomHeader";
+import Colors from "../../../../Utils/Colors";
 
   export default function PickupLocation({navigation,route }) {
 
@@ -113,29 +115,39 @@ import {
  
  
    return (
+    
      <NativeBaseProvider>
+         <View style={{backgroundColor:Colors.white,minHeight:'100%'}}>
+     
+       <CustomHeader title="Select location" />
+       <View style={{marginHorizontal:10,marginTop:20}}>
        <Input
          size="xl"
-         h="60px"
+         h="50px"
          InputLeftElement={
            <Icon
+           style={{marginLeft:10}}
            name={'search-location'}
-           size={30}
-            color="black"
+           size={25}
+            color={Colors.primary}
            />
          }
+         style={{fontSize:16}}
          isFullWidth={true}
-         placeholder="Search Pickup"
+         placeholder="Search Location"
          InputRightElement={
            <Button
              size="md"
              rounded="none"
              w="1/4"
              h="full"
-             bg="green.700"
+             bg={Colors.primaryDark}
              onPress={searchLocation}
+            
            >
-             search
+             <Text style={{fontFamily:'Sofia-Regular',color:Colors.white,fontSize:17}}>
+             Search
+             </Text>
            </Button> 
          }
          mb="6"
@@ -220,12 +232,13 @@ import {
  
      <TouchableOpacity
      style={{alignItems: "center",
-     backgroundColor: "#DDDDDD",
-     padding: 10,
+     backgroundColor: Colors.primary,
+     borderRadius:10,
+     padding: 5,
       margin:10}}
      onPress={() =>currentLocation()}
    >
-     <Text>select current location as Pickup</Text>
+     <Text style={{color:Colors.white,fontSize:17,fontFamily:'Charm-Bold'}}>Select Current location as Pickup</Text>
    </TouchableOpacity>
      {pickup && <AlertDialog
            isOpen={isOpen}
@@ -234,27 +247,28 @@ import {
            <AlertDialog.Content>
              <AlertDialog.CloseButton />
              <AlertDialog.Body>
-             pickup selected name : {pickup.name? pickup.name:'not define'}  address : {pickup.address? pickup.address:'not define'}
-             latitude : {pickup.latitude}  longitude : {pickup.longitude}
+             Selected Location : {pickup.name? pickup.name:'Not define'} Address : {pickup.address? pickup.address:'Not define'}
+             Latitude : {pickup.latitude}Longitude : {pickup.longitude}
              </AlertDialog.Body>
            
            </AlertDialog.Content>
          </AlertDialog>}
     
-      {pickup && <Button size="md" variant="white" bg="green.700" w="70%" h="12" marginLeft="16" marginTop="7"
+      {pickup && <Button size="md" variant="white" bg={Colors.primaryDark} w="70%" h="12" style={{alignSelf:'center',marginTop:'3%',borderRadius:10}}
       onPress={() => navigation.navigate('mechanicSelection',{pickup,form})}>
-     choose mechanic
+     Choose Mechanic
      </Button>}
-     
- 
+     </View>
+     </View>
      </NativeBaseProvider>
+     
    );
  }
  
  const styles = StyleSheet.create({
    container: {
      flex: 1,
-     backgroundColor: "#fff",
+     backgroundColor: "white",
      alignItems: "center",
      justifyContent: "center",
    },

@@ -90,7 +90,7 @@ const index = ({route}) => {
         <View style={{ backgroundColor: 'white', minHeight: '100%' }}>
             <CustomHeader title='Select Mechanic' />
             <View style={styles.container}>
-                <Text style={styles.title}>Near By Mechanics</Text>
+                <Text style={styles.title}>Near By Mechanic</Text>
 
                 {mechList.length > 0 ? (mechList.map((element) => {
                     return (
@@ -116,11 +116,11 @@ const index = ({route}) => {
                     );
                 })) : (<View style={{ alignSelf: 'center', marginTop: 20 }}><Text>Finding Near By Mechanic...</Text><ActivityIndicator size={55} /></View>)
                 }
-                <View style={{ marginTop: 30 }}>
+                {/* <View style={{ marginTop: 30 }}>
                     <Text style={{fontSize:18,fontFamily:'Sofia-Regular',color:Colors.primaryDark}}>Recommendation :</Text>
 
 
-                </View>
+                </View> */}
 
 
             </View>

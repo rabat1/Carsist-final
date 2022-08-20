@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ScrollView, View, } from 'react-native';
+import { ScrollView, View, Text} from 'react-native';
 import ServiceExpense from '../../../../Components/ServiceExpense';
 import { connect } from 'react-redux';
 import { CustomHeader } from '../../../../Navigation/CustomHeader';
@@ -18,7 +18,7 @@ const index = (props) => {
   const getExpenseData = async () => {
 
     const data = await userExpenseList();
-    console.log('data', data);
+   // console.log('data', data);
     setExpenseList(data);
   }
 
@@ -43,7 +43,7 @@ const index = (props) => {
           expenseList.length > 0 ? (
             <CustomButton style={{ width: '90%', alignSelf: 'center', marginBottom: '80%', marginTop: 40 }}
               onPress={() => navigate('graph', { expenseList })} primary title='Show Results in Graph' />
-          ) : null : null
+          ) : <Text>No Previous Record</Text> : null
         }
 
       </ScrollView>

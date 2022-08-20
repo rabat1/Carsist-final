@@ -386,6 +386,33 @@ async function addExpense(form, userid) {
   });
 }
 
+async function addReminder(form) {
+  const userId = auth().currentUser.uid;
+  form.userid = userId;
+  form.date= form.date.toString();
+
+  await firestore().collection('ReminderList').doc().set({
+    form,
+  });
+}
+async function userReminderList() {
+  const userId = auth().currentUser.uid;
+  var expenseData = [];
+  await firestore()
+    .collection('ReminderList')
+    .where('form.userid', '==', userId)
+    .get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+        expenseData.push(doc.data().form);
+      });
+    })
+    .catch();
+  return expenseData;
+}
+
+
+
 export {
   registerUser,
   loginUser,
@@ -412,4 +439,6 @@ export {
   addBill,
   confirmPayment,
   addExpense,
+  addReminder,
+  userReminderList,
 };
