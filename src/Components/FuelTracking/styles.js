@@ -14,8 +14,8 @@ export default StyleSheet.create({
     itemText:{
         color:Colors.primaryDark, 
         fontSize:16,
-        fontWeight:'bold', 
         marginLeft:20, 
+        fontFamily:'Charm-Bold'
         
     },
     itemTextValue:{
@@ -28,8 +28,14 @@ export default StyleSheet.create({
         borderRadius:100,
         justifyContent:'center',alignItems:'center',
         position:"absolute",
-        top:480,
+        top:'65%',
         right:20,
     
-        }
+        },
+        title:{ 
+            fontSize: 20,
+            alignSelf: 'center', 
+            color: Colors.primaryDark,
+            fontFamily:'Sofia-Regular',
+         }
 })

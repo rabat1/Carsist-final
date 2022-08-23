@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import {
   View, Center, NativeBaseProvider, Box, Heading, VStack, FormControl,
-  Input, Button, Spinner, Image, TextArea, ScrollView, Divider
+  Input, Button, Spinner, Image, TextArea, ScrollView, Divider,Text
 } from "native-base";
+import messaging from '@react-native-firebase/messaging';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import Geolocation from 'react-native-geolocation-service';
 import { registerMechanic, uploadMechanicInfo } from '../../../config/firebase';
+
 
 export default function MechanicRegistration({ navigation }) {
   // console.log('params' + route.params);
   // const id = route.params;
+  //  // Geolocation.getCurrentPosition(info => console.log(info));
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [contact, setContact] = useState('');
@@ -23,25 +27,49 @@ export default function MechanicRegistration({ navigation }) {
   const [cnic, setCnic] = useState('');
   const [slipImage, setSlipImage] = useState();
   const [services, setServices] = useState('');
+  const [location,setLocation]=useState();
+  const [latitude,setLatitude]=useState();
+  const [longitude,setLongitude]=useState();
 
-
+  useEffect(() => {
+    if(location != undefined)
+    {
+      setLatitude(location.coords.latitude);
+      setLongitude(location.coords.longitude);
+    }
+    
+     
+    },[location]);
 
   const register = async () => {
+
+   
     setLoading(true);
     //  const url = await uploadImage(imageUriGallary);
     //  console.log(url);
+    if(latitude == undefined && longitude == undefined) 
+    {
+      alert(" Please select current location");
+      setLoading(false);
+      return;
+    }
     const validateCNIC = (cnic) => {
       var re = /^[0-9]{5}-[0-9]{7}-[0-9]$/;
       return re.test(cnic);
     };
     if (!validateCNIC(cnic)) {
       // not a valid email
-      console.log('not a valid cnic')
+      alert('not a valid cnic')
+      setLoading(false);
       return;
     }
     try {
+      // messaging().getToken().then( token=>{
+        
 
-      await registerMechanic({ name, email, contact, password, shopName, address, services, cnic, slipImage, shopImage });
+      // })
+
+      await registerMechanic({ name, email, contact, password, shopName, address, services, cnic, slipImage, shopImage,latitude,longitude });
       setLoading(false);
       navigation.goBack();
 
@@ -69,6 +97,10 @@ export default function MechanicRegistration({ navigation }) {
     //const data = await uploadMechanicInfo({id,shopName,address,services,cnic,slipImage,shopImage});
     //  console.log(data);
 
+  }
+  const getLocation=()=>{
+     Geolocation.getCurrentPosition(info => setLocation(info));
+console.log("not working");
   }
 
   const openGallery = () => {
@@ -250,7 +282,11 @@ export default function MechanicRegistration({ navigation }) {
                   onChangeText={(text) => setServices(text)}
                 />
               </FormControl>
+              {latitude && longitude && <Text fontSize="md">latitude : {latitude} , longitude : {longitude}</Text>}
 
+              <Button bgColor="primary.800" alignItems="center" onPress={() => getLocation()}>
+              Please click here to get your location
+            </Button>
               {loading ? <Spinner color="emerald.500" size="lg" /> :
                 <Button mt="2" bgColor="primary.600" onPress={register}>
                   Submit

@@ -49,9 +49,7 @@ const index = (props) => {
             <View style={style.divider}></View>
             <View style={style.divider}></View>
             <View style={style.divider}></View>
-            <View style={style.divider}></View>
-            <View style={style.divider}></View>
-            <Text style={{fontSize:16,marginTop:5,color:Colors.primaryDark,textAlign:'center'}}>
+            <Text style={style.formTitle}>
                 Please Fill out the Form</Text>
 
             <View style={{paddingHorizontal:15}}>
@@ -64,7 +62,7 @@ const index = (props) => {
                 value={props.form.name || ""}
                 label='Name*' placeholder="Enter Your Name" />
 
-            <Text style={style.textLabel}>Your Problem</Text>
+            <Text style={style.textLabel}>Your Problem*</Text>
             <DropDownPicker
                 listMode="SCROLLVIEW"  
                 open={props.open}
@@ -96,7 +94,7 @@ const index = (props) => {
                 }}
                 multiline={true}
                 value={props.form.description || ""}
-                label='Description*' placeholder="Enter Description" />
+                label='Description' placeholder="Enter Description" />
             <CustomButton
                 //  loading={loading}
                 onPress={props.onSubmit}

@@ -127,7 +127,7 @@ const index = ({navigation}) => {
     // setShowModal(false);
     setIsOpen2(false);
 
-    navigation.navigate('Document', {currentUrl});
+    // navigation.navigate('Document', {currentUrl});
   };
   return (
     <NativeBaseProvider>
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: 430,
+    top: '75%',
     right: 20,
   },
   pdf: {

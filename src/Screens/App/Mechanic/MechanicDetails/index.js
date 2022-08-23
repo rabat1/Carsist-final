@@ -1,105 +1,58 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, ScrollView } from 'react-native'
 import CustomButton from '../../../../Components/CustomButton';
 import { CustomHeader } from '../../../../Navigation/CustomHeader'
 import { connect } from 'react-redux';
-import firestore from '@react-native-firebase/firestore';
-import messaging from '@react-native-firebase/messaging';
-import auth from '@react-native-firebase/auth';
 import Colors from '../../../../Utils/Colors';
 import Icon from '../../../../Utils/Icon';
 import Ratings from '../../../../Components/Ratings'
 import MechanicDetail from '../../../../Components/MechanicDetail'
 import styles from './styles';
 import MechanicServices from '../../../../Components/MechanicServices'
-import { getMechanic } from '../../../../config/firebase';
-//import * as admin from 'firebase-admin'
-//https://rnfirebase.io/messaging/server-integration
-//https://instamobile.io/react-native-tutorials/push-notifications-react-native-firebase/
+import { getMechanic, getUser, addride } from '../../../../config/firebase';
+import { useSelector } from 'react-redux';
+import { useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import axios from "axios";
 
-const index = (props) => {
+const index = ({ route }) => {
 
-  // Node.js
+  const { mechanicId, pickup, form, element } = route.params;
+  const user = useSelector(state => state.userReducer.user)
+  // console.log(pickup,form,mechanicId,user,element);
+  const { navigate } = useNavigation();
 
-  // ownerId - who owns the picture someone liked
-  // userId - id of the user who liked the picture
-  // picture - metadata about the picture
-
-  async function onMechanicSelected() {
-    // Get the owners details
-    //const mechanic = admin.firestore().collection('users').doc(mechanicId).get();
-    const userId = props.userData.userReducer.user.id
-    console.log(userId)
-    //console.log('data',data);
-
-    // Get the users details
-    const user = await firestore().collection('users').doc(userId).get();
-    const token = user._data.token;
-    messaging()
-      .getToken()
-      .then(token => {
-        console.log(token)
-        // saveTokenToDatabase(token);
-      });
-
-    //    const registrationToken = 'YOUR_REGISTRATION_TOKEN';
-
-    const message = {
-      token,
-      data: {
-        score: '850',
-        time: '2:45'
-      },
-
-    };
-    messaging().sendMessage(message).then((res) => { console.log('Haha') }).catch((err) => { console.log('err', err) })
+// <<<<<<< HEAD
+//   const sendNotification= ()=>{
+          
+//     axios.post('https://1204-39-50-200-193.ngrok.io/send-notification',{
+//      token:element.token
+ 
+//    }).then((response) => response.data).catch((e)=>console.log(e));
+    
+//    }
+// =======
+  const sendNotification = () => {
 
 
+    axios.post('https://36c5-39-50-235-147.ngrok.io/send-notification', {
+      token: element.token
 
-
-    //   messaging().sendToDevice(
-    //     token, // ['token_1', 'token_2', ...]
-    //     {
-    //         // notification: {
-    //         //             title: "Welcome",
-    //         //             body: "thank for installed our app",
-    //         //           }
-    //       data: {
-    //         // notification: {
-    //         //     title: "Welcome",
-    //         //     body: "thank for installed our app",
-    //         //   },
-    //         //     data hata kar notification rakho bs 
-    //        title: 'ha',
-    //        body: 'hy',
-    //         //picture: 'hu',
-    //       },
-    //     },
-    //     {
-    //       //Required for background/quit data-only messages on iOS
-    //       contentAvailable: true,
-    //       //Required for background/quit data-only messages on Android
-    //      priority: 'high',
-    //     },
-    //   )
-    //   .then(function(response) {
-    //     console.log("Notification sent successfully:", response);
-    //   })
-    //   .catch(function(error) {
-    //     console.log("Notification sent failed:", error);
-    //   });  
-
+    }).then((response) => response.data).catch((e) => console.log(e));
 
   }
 
-  //   const [items, setItems] = useState([
-  //     { label: 'Warning Light Shows', value: 'warningLight' },
-  //     { label: 'Engine is Sputtering', value: 'engineIssue' },
-  //     { label: 'Steering Wheel is Shaking', value: 'shakingWheel' },
-
-  // ]);
+  async function onMechanicSelected() {
+    const { id } = user;
+    const { name, phoneNo, issue } = form;
 
 
+    const docid = await addride({ mechanicId, id, pickup, name, phoneNo, issue });
+    //sending notification to mechanic;
+    sendNotification();
+    //  console.log(docid);
+    navigate("request", { docid, element });
+  }
 
 
   const [services, setServices] = useState('');
@@ -109,44 +62,45 @@ const index = (props) => {
   const [shopName, setShopName] = useState('')
   const [mechId, setMechId] = useState('')
 
-  const MechData = async (mechanic_id) => {
+  const MechData = async () => {
     //here give that id which user seleceted mechanic
-    const data = await getMechanic('QT5iHdUIUAMFNQ6TuQwFthWAIgC3')
-
+    const data = await getMechanic(mechanicId);
     setAddress(data.address)
     setName(data.name)
     setContact(data.contact)
     setShopName(data.shopName)
     setMechId(data.id)
     setServices(data.services)
-    console.log('dataaa', data)
+    // console.log('dataaa', data)
   }
   React.useEffect(() => {
     MechData();
   }, [])
 
   return (
-    <ScrollView style={{ backgroundColor: Colors.white, minHeight: '100%' }}>
+    <>
       <CustomHeader title='Mecahnic Details' />
-      <View style={{ marginHorizontal: 10 }}>
 
-        <View>
+      <ScrollView style={{ backgroundColor: Colors.white, minHeight: '100%' }}>
+        <View style={{ marginHorizontal: 15, marginVertical: 40 }}>
+
           <Text style={styles.mechanicName}>{name}</Text>
 
           <MechanicDetail label='Shop Name:' value={shopName} iconName='home' />
           <MechanicDetail label='Shop Address:' value={address} iconName='map-marker' />
-          <MechanicDetail label='Contact Information:' value={contact} iconName='phone' />
+          <MechanicDetail label='Contact:' value={contact} iconName='phone' />
+
+
+          <Ratings disable={true} mechanic_id={mechanicId} />
+
+          <MechanicServices services={services} />
+          {/* give mechanic_id to services component */}
+
+
+          <CustomButton style={{ marginVertical: 30 }} title='Select this Mechanic' primary onPress={onMechanicSelected} />
         </View>
-
-
-        <Ratings disable={true} mechId='QT5iHdUIUAMFNQ6TuQwFthWAIgC3' />
-
-        <MechanicServices services={services} />
-        {/* give mechanic_id to services component */}
-
-        <CustomButton title='Choose this Mechanic' primary onPress={onMechanicSelected} />
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </>
   )
 }
 

@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react'
-import { View, Text,ScrollView } from 'react-native'
+import { View, Text,ScrollView, Alert } from 'react-native'
 import IssueRec from '../../../../Components/IssueRec'
 import { CustomHeader } from '../../../../Navigation/CustomHeader';
 
@@ -38,8 +38,13 @@ const index = () => {
     };
 
     const onSubmit = async () => {
-        navigate('mechanicSelection')
-        console.log(form);
+        // navigate('mechanicSelection')
+        if(!form.phoneNo || !form.name || !form.issue){
+            Alert.alert("Please Fill the compulsory details")
+        }
+        else{
+        navigate("pickuplocation",{form});
+        }
     }
 
     return (

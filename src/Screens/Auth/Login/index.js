@@ -17,7 +17,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {Center,NativeBaseProvider} from "native-base";
 import { useDispatch} from 'react-redux';
-import {loginUser,getUser,updateStatus,getMechanic} from '../../../config/firebase';
+import {loginUser,getUser,updateStatus,getMechanic,generateUserToken} from '../../../config/firebase';
 import { updateUser } from '../../../store/actions/userAction';
 
 export default function Login({ navigation })
@@ -41,9 +41,11 @@ export default function Login({ navigation })
         var user = await loginUser(email,password);
         if(user.emailVerified === true)
         { 
+          
+          
           const data = await getUser(user.uid);
-         
-            console.log(data);
+          generateUserToken(user.uid,true);
+            //console.log(data);
             if(data !== undefined)
             {
               dispatch(updateUser(data));
@@ -57,9 +59,9 @@ export default function Login({ navigation })
       catch(e)
       {
         // start of catch
-      
-        
-        if(e.message=="undefined is not an object (evaluating '_data.email')")
+      //undefined is not an object (evaluating '_data.email')
+        //undefined is not an object (evaluating '_data.id = uid')
+        if(e.message=="undefined is not an object (evaluating '_data.id = uid')")
         {
           // try{
           //   var user2 = await loginUser(email,password);
@@ -79,11 +81,16 @@ export default function Login({ navigation })
           // {
           //   alert(e.message);
           // }
-          
+           try{
             var user2 = await loginUser(email,password);
+            // console.log("user2",user2);
             if(user2.emailVerified === true)
             {
+              // console.log(" am here ");
+              generateUserToken(user2.uid,false);
+              // console.log(user2);
               const data = await getMechanic(user2.uid);
+              // console.log("dataaa",data);
               if(data.status == "pending")
               {
                 alert("your status is still pending");
@@ -92,18 +99,35 @@ export default function Login({ navigation })
               {
                 alert("sorry, you can't use app, please check your email. ");
               }
-              else dispatch(updateUser(data));
+              else if (data.status=="accepted")
+              {  
+                // console.log(" am here 2");
+                 dispatch(updateUser(data));
+              }
+            
+           }
+           else setIsOpen(true);
+            
+          }
+          catch(e)
+          {
+            if(e.message =="The password is invalid or the user does not have a password.")
+            {
+              alert("password is wrong");
             }
-            else setIsOpen(true);
-           
+          }
           
          
         }
         else 
         {
-          if(e.message =="The password is invalid or the user does not have a password") alert("password is wrong");
+          if(e.message =="The password is invalid or the user does not have a password.")
+          {
+            alert("password is wrong");
+          }
            
           console.log(e.message);
+          alert(e.message);
         }
        
         
@@ -176,9 +200,8 @@ export default function Login({ navigation })
                   fontWeight: "medium",
                   fontSize: "sm",
                 }}
-                href="#"
-                onPress={() => setShowModal(true)}
-              >
+              onPress={() => setShowModal(true)}
+             >
                 Sign Up
               </Link>
               <Modal isOpen={showModal} onClose={() => setShowModal(false)}>

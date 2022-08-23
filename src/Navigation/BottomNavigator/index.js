@@ -1,22 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from '../../Screens/App/User/Home';
-import Expenses from '../../Screens/App/User/Expenses';
-import UserHistory from '../../Screens/App/User/UserHistory';
-import Reminders from '../../Screens/App/User/Reminders';
-import FuelTracker from '../../Screens/App/User/FuelTracker';
 import Icon from '../../Utils/Icon';
 import Colors from '../../Utils/Colors';
-import { ExpenseStack, FuelTrackStack, HomeStack, UserDocumentStack, ReminderStack } from '../StackNavigation';
+import { ExpenseStack, FuelTrackStack, HomeStack, ReminderStack, UserDocumentStack } from '../StackNavigation';
+import { useSelector } from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 
 export default function HomeTabs() {
+  const user = useSelector(state => state.userReducer.user);
+  const [statee, setState] = useState(user.mechanic);
   return (
     <Tab.Navigator
-
       initialRouteName="Home"
-
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarHideOnKeyboard: true,
@@ -52,7 +48,7 @@ export default function HomeTabs() {
           else if (route.name === 'FuelTracker') {
             [iconName, Color, size] = focused ? ['calculator', Colors.primary, 25] : ['calculator', Colors.grey, 22]
           }
-          else if (route.name === 'Reminders') {
+          else if (route.name === 'Remiders') {
             [iconName, Color, size] = focused ? ['bell', Colors.primary, 25] : ['bell', Colors.grey, 22]
           }
           else if (route.name === 'UserDocs') {
@@ -63,18 +59,20 @@ export default function HomeTabs() {
         },
       })}
     >
+      {
+        statee ?
+          <Tab.Screen name="Home" component={HomeStack}
+            options={{
+              tabBarStyle: {
+                display: 'none'
+              },
+            }}
+          /> :
+          <Tab.Screen name="Home" component={HomeStack} />
+      }
 
-      <Tab.Screen name="Home" component={HomeStack}
-        options={{
-          //  headerShown:false,
-          //   tabBarIcon: ({Color}) => (
-          //     <Icon name='home' type='material' color={Color} size={30} />
-          //   ),
-        }}
-      />
-      {/* <Tab.Screen  name="UserHistory" component={UserHistory} /> */}
       <Tab.Screen name="FuelTracker" component={FuelTrackStack} />
-      <Tab.Screen name="Reminders" component={ReminderStack} />
+      <Tab.Screen name="Remiders" component={ReminderStack} />
       <Tab.Screen name="Expenses" component={ExpenseStack} />
       <Tab.Screen name="UserDocs" component={UserDocumentStack} />
 

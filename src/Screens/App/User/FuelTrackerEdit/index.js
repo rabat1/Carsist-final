@@ -63,7 +63,7 @@ const index = (props) => {
     < >
       <CustomHeader title='Add Record' />
       <View style={{ backgroundColor: Colors.primary, height: 80, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ color: Colors.white, fontSize: 16, fontWeight: '700' }}>Add Your Car's Fuel Tracking Record</Text>
+        <Text style={{ color: Colors.white, fontSize: 19,fontFamily:'Sofia-Regular' }}>Add Your Car's Fuel Tracking Record</Text>
         <Icon name='recording' type='ionicon' size={23} color={Colors.white} />
       </View>
 
